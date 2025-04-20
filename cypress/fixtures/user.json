@@ -1,0 +1,31 @@
+{
+  "name": "Diego",
+  "email": "D10s@Maradona.com",
+  "password": "123456",
+  "gender": "Mr",
+  "day": "31",
+  "month": "10",
+  "year": "1980",
+  "firstName": "user",
+  "lastName": "test",
+  "company": "Globant",
+  "address": "Alem",
+  "address2": "1200",
+  "country": "United States",
+  "state": "Buenos Aires",
+  "city": "Bahia Blanca",
+  "zipcode": "B8000",
+  "mobileNumber": "9876543",
+  "payment": {
+    "name": "Juan Tester",
+    "number": "4111111111111111",
+    "cvc": "123",
+    "month": "12",
+    "year": "2028"
+  },
+  "existingUser": {
+    "name": "peditoQA",
+    "email": "Pedritotest@qa.com",
+    "password": "test1234"
+  }
+}

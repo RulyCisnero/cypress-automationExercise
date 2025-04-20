@@ -1,0 +1,32 @@
+datos de pedrito peditoQA
+{
+  "name": "peditoQA",
+  "email": "Pedritotest@qa.com",
+  "password": "test1234",
+  "gender": "Mr",
+  "day": "25",
+  "month": "5",
+  "year": "1987",
+  "firstName": "peditoQA",
+  "lastName": "test",
+  "company": "globallogic",
+  "address": "Alsina",
+  "address2": "350",
+  "country": "United States",
+  "state": "Buenos Aires",
+  "city": "Bahia Blanca",
+  "zipcode": "B8000",
+  "mobileNumber": "9876543",
+  "payment": {
+    "name": "Juan Tester",
+    "number": "4111111111111111",
+    "cvc": "123",
+    "month": "12",
+    "year": "2028"
+  },
+  "existingUser": {
+    "name": "peditoQA",
+    "email": "Pedritotest@qa.com",
+    "password": "test1234"
+  }
+}
