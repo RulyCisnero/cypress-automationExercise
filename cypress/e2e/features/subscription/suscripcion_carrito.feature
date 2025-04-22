@@ -1,3 +1,4 @@
+@smoke
 Feature: Verify subscription from the cart page
 
   Scenario: The user subscribes from the footer of the cart

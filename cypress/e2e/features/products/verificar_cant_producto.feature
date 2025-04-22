@@ -1,3 +1,4 @@
+@smoke
 Feature: Feature name
 
     Feature Description: Verificar cantidad del producto en el carrito

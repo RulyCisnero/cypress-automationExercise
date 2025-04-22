@@ -1,3 +1,4 @@
+@smoke
 Feature: Test Cases Page Navigation
 
   Scenario: User navigates to the Test Cases page successfully

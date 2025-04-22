@@ -1,3 +1,4 @@
+@smoke
 Feature: Agregar productos al carrito
 
   Scenario: El usuario agrega dos productos al carrito desde la página de productos

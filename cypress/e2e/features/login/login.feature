@@ -1,4 +1,4 @@
-@sanity
+@sanity @smoke
 Feature: User Login Scenarios
 
   Scenario: User logs in with valid credentials

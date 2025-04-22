@@ -1,3 +1,4 @@
+@smoke
 Feature: Contact Us Form
 
   Scenario: User submits the contact us form successfully

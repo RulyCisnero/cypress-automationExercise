@@ -1,3 +1,4 @@
+@smoke
 # features/productos/buscar_producto.feature
 # También se puede probar con:
 # - Blue Top

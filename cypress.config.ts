@@ -2,54 +2,49 @@ import { defineConfig } from "cypress";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
+//import allureWriter from '@shelex/cypress-allure-plugin/writer';
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 export default defineConfig({
-  // 🔧 ESTA es la posición correcta del TAGS por defecto (afuera del bloque `e2e`)
   env: {
-    TAGS: "not @ignore" // Esto hace que por defecto se salten tests ignorados
+    TAGS: "not @ignore",
+    stepDefinitions: "cypress/e2e/features/steps/*.ts",
+    allure: true,
+    allureReuseAfterSpec: true,
+    allureAddVideoOnPass: true, // Opcional: añade video aunque el test pase
+    allureAttachRequests: true  // Opcional: adjunta solicitudes HTTP
   },
   e2e: {
-    // 👇 ES ASÍ como se declara setupNodeEvents de forma async
-    setupNodeEvents: async (on, config) => {
+    async setupNodeEvents(on, config) {
+      // Configuración de Allure
+      allureWriter(on, config);
+      
+      // Configuración de Cucumber
       await addCucumberPreprocessorPlugin(on, config);
-
+      
       on(
         "file:preprocessor",
         createBundler({
           plugins: [createEsbuildPlugin(config)],
         })
       );
-
-      // 💡 Reportes con mochawesome 
-      require("cypress-mochawesome-reporter/plugin")(on);
-
+      
+      // Opcional: Adjuntar screenshots automáticamente
+      on('after:screenshot', (details) => {
+        if (details.testFailure) {
+          allureWriter.addAttachment('Screenshot on failure', details.path, 'image/png');
+        }
+      });
+      
       return config;
     },
-
-    // Archivos que se consideran tests
     specPattern: [
-      "cypress/e2e/**/*.feature",
+      "cypress/e2e/features/**/*.feature",
       "cypress/e2e/**/*.cy.ts"
     ],
-
-    // Ruta base del sitio que estás testeando
     baseUrl: "https://www.automationexercise.com/",
-
-    // Excluir ejemplos por defecto
-    excludeSpecPattern: ["**/examples/**"],
-
-    // 📋 Configuración del reporter mochawesome 
-    reporter: "mochawesome",
-    reporterOptions: {
-      reportDir: "cypress/reports",
-      overwrite: false,
-      html: false,
-      json: true
-    },
-
-    // 🔍 Ruta a los step definitions de tus features
-    env: {
-      stepDefinitions: "cypress/e2e/features/steps/**/*.ts"
-    }
+    excludeSpecPattern: ['cypress\e2e\Api-Test\Test1'],
+    screenshotOnRunFailure: true,
+    video: true // Recomendado para Allure
   }
 });

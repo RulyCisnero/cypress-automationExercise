@@ -1,4 +1,4 @@
-# language: es
+@smoke
 Característica: Visualización de productos
 
   Escenario: Verificar todos los productos y la página de detalle de producto
