@@ -5,6 +5,7 @@ import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-prepro
 //import allureWriter from '@shelex/cypress-allure-plugin/writer';
 const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
+
 export default defineConfig({
   env: {
     TAGS: "not @ignore",
@@ -18,33 +19,34 @@ export default defineConfig({
     async setupNodeEvents(on, config) {
       // Configuración de Allure
       allureWriter(on, config);
-      
+
       // Configuración de Cucumber
       await addCucumberPreprocessorPlugin(on, config);
-      
+
       on(
         "file:preprocessor",
         createBundler({
           plugins: [createEsbuildPlugin(config)],
         })
       );
-      
+
       // Opcional: Adjuntar screenshots automáticamente
       on('after:screenshot', (details) => {
         if (details.testFailure) {
           allureWriter.addAttachment('Screenshot on failure', details.path, 'image/png');
         }
       });
-      
+
       return config;
     },
     specPattern: [
-      "cypress/e2e/features/**/*.feature",
-      "cypress/e2e/**/*.cy.ts"
+      'cypress\\e2e\\Api-Test\\Test1\\**\\*',
     ],
     baseUrl: "https://www.automationexercise.com/",
-    excludeSpecPattern: ['cypress\e2e\Api-Test\Test1'],
+    excludeSpecPattern: ['cypress\e2e\Api-Test\Test1',
+      'cypress\e2e\Api-Test\Test1'
+    ],
     screenshotOnRunFailure: true,
-    video: true // Recomendado para Allure
+    video: false // Recomendado para Allure
   }
 });
