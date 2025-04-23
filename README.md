@@ -83,17 +83,24 @@ npx cypress run
 Allure Report
 
 Generación: npm run generate-allure-report
+
 Visualización: npm run open-allure-report
 
 Mochawesome Report (opcional):
+
 Merge: npm run report:merge
+
 Generar HTML: npm run report:generate
 
 
 ✅ Tests Implementados
+
 Registro de usuario (formulario + validación API)
+
 Login con credenciales válidas e inválidas
+
 Eliminación de usuario desde la UI y desde la API
+
 Validaciones cruzadas: respuesta API + visibilidad DOM
 
 
@@ -102,16 +109,25 @@ Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por
 
 
 🧠 Buenas Prácticas Aplicadas
+
 Comandos personalizados (commands.ts) para lógica reutilizable
+
 Estructura modular con Page Object Model
+
 Agrupación de tests por tags (@smoke, @regression, etc.)
+
 Separación de tests (features/, Ui-Tests/)
+
 Tipado fuerte con TypeScript
 
 🔮 Mejoras Futuras
+
 Integración con CI/CD (GitHub Actions)
+
 Validación visual con Percy u otras herramientas
+
 Evidencias automáticas (PDFs, screenshots)
+
 Notificaciones por Slack o Email post ejecución
 
 ✍ Autor
