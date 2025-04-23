@@ -47,9 +47,9 @@ npx cypress open
 
 # Correr tests en headless mode (CLI)
 npx cypress run
-
 ```bash
 🧪 Comandos de Test
+```bash
 "scripts": {
       "test:cy": "npx cypress run",
       "test:ui": "npx cypress run --env allure=true --config specPattern=cypress/e2e/UI-Tests/**/*.cy.ts",
@@ -77,7 +77,7 @@ npx cypress run
       "clean:cypress": "rimraf cypress/screenshots cypress/videos",
       "clean:all": "npm run clean:allure && npm run clean:cypress"
     }
-
+```bash
 📄 Reportes
 Allure Report
 
