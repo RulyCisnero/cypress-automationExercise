@@ -3,7 +3,11 @@ describe('API 6: POST To Search Product without search_product parameter', () =>
         cy.request({
             method: 'POST',
             url: "https://automationexercise.com/api/searchProduct",
-            failOnStatusCode: false
+            failOnStatusCode: false,
+            form: true,
+            body: {
+                 // No se pasa el parámetro search_product
+            }
         }).then((res) => {
             const parsedBody = JSON.parse(res.body);
             // Validación del responseCode

@@ -9,7 +9,7 @@ Feature: Verificaciones rápidas de funciones clave
 
   Scenario: Se puede agregar un producto al carrito
     Given I visit the home page sanity-steps
-    When I navigate to the products page
+    When I navigate to the products page sanity-steps
     And I add a product to the cart
     Then I should see the product in the cart
  

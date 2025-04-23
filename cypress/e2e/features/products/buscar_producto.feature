@@ -1,16 +1,17 @@
 @smoke
-# features/productos/buscar_producto.feature
-# También se puede probar con:
-# - Blue Top
-# - Men Tshirt
-# - Winter Top
-
 Feature: Búsqueda de productos
 
-  Scenario: Buscar un producto por nombre
+  Scenario Outline: Buscar distintos productos por nombre
     Given que visito la página principal -BP
     When hago clic en el botón de Productos
-    And ingreso "Polo" en el campo de búsqueda
+    And ingreso "<producto>" en el campo de búsqueda
     And hago clic en el botón de buscar
-    When debería ver el título de productos buscados
-    When deberían visualizarse los productos relacionados con la búsqueda
+    Then debería ver el título de productos buscados
+    Then deberían visualizarse los productos relacionados con la búsqueda de "<producto>"
+ 
+    Examples:
+      | producto     |
+      | Polo         |
+      | Blue Top     |
+      | Men Tshirt   |
+      | Winter Top   |

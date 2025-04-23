@@ -37,22 +37,25 @@ declare namespace Cypress {
         fillSignupForm(): Chainable<void>;
         UserLogin(): Chainable<void>; //rellena el formulario de login
         verifyLoginAccountVisible(): Chainable<void>; //verifica que la cuenta de usuario esté visible
-        registerUserWithAPI(): Chainable<Cypress.Response>;// 🚀 Devuelve la respuesta de la API
-        deleteUserWithAPI(): Chainable<Cypress.Response>; // Elimina un usuario y devuelve la respuesta de la API
-        UserLoginCredencialesInvalidas(): Chainable<Cypress.Response>; //rellena el formulario de login con credenciales invalidas
-        UserLoginSinEmailParametro(): Chainable<Cypress.Response>; //rellena el formulario de login sin email
         fillContactUsForm(): Chainable<void>; //rellena el formulario de contacto
         subscribeWithEmail(): Chainable<void>; //rellena el footer de suscripcion con el mail de mi .json
         clickAddToCartByProductId(id: number): Chainable<void>; // Agrega un producto al carrito por su ID
         clickAddToCartByProductIdPASS(id: number): Chainable<void>; // Agrega un producto al carrito por su ID
-        deleteUserIfExists(): Chainable<Cypress.Response>; // Elimina un usuario si existe
         verifySearchResultsMatchApi(searchTerm: string): Chainable<void>; // Verifica que los resultados de búsqueda coincidan con la API
         fillReviewtForm(): Chainable<void>; //rellena el formulario de contacto
         fillCardDetails(): Chainable<void>; //rellena el formulario de pago
-        VerifyLoginApi(): Chainable<Cypress.Response>; //verifica el login por API
+        verifyLoginAccountVisibleUserExist(): Chainable<void>;//solo para mostar el logeo del usuario existente
+        
+        
         getUserDetailsByEmail(email: string): Chainable<Cypress.Response>; //obtiene los detalles del usuario por email
+        registerUserWithAPI(): Chainable<Cypress.Response>;// Devuelve la respuesta de la API
+        deleteUserWithAPI(): Chainable<Cypress.Response>; // Elimina un usuario y devuelve la respuesta de la API
+        UserLoginCredencialesInvalidas(): Chainable<Cypress.Response>; //rellena el formulario de login con credenciales invalidas
+        UserLoginSinEmailParametro(): Chainable<Cypress.Response>; //rellena el formulario de login sin email
+        deleteUserIfExists(): Chainable<Cypress.Response>; // Elimina un usuario si existe
+        VerifyLoginApi(): Chainable<Cypress.Response>; //verifica el login por API
         verifyLoginInvalidAPI(): Chainable<Cypress.Response>; //verifica el login por API con credenciales invalidas
         VerifyLoginWithOutEmailParameterAPI(): Chainable<Cypress.Response>; //verifica el login por API sin email
-        verifyLoginAccountVisibleUserExist(): Chainable<void>;//solo para mostar el logeo del usuario existente
+        SearchProductWithoutParameter():Chainable<Cypress.Response>;//Buscar producto sin parametro (producto)
     }
 }

@@ -31,9 +31,9 @@ Then("debería ver el título de productos buscados", () => {
   productPage.verifySearchedProductsTitle();
 });
 
-Then("deberían visualizarse los productos relacionados con la búsqueda", () => {
+Then("deberían visualizarse los productos relacionados con la búsqueda de {string}",(termino:string) => {
   productPage.verifySearchResultsVisible();
-  // También podrías reactivar la línea para la API si querés
-  // cy.verifySearchResultsMatchApi("Polo");
+  // verificacion por API UI 
+   cy.verifySearchResultsMatchApi(termino);
 });
 

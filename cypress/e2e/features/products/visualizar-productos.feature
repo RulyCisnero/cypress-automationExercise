@@ -1,12 +1,12 @@
 @smoke
-Característica: Visualización de productos
+Feature: Visualización de productos
 
-  Escenario: Verificar todos los productos y la página de detalle de producto
-    Dado que visito la página principal
-    Cuando hago clic en el botón de productos
-    Entonces debería ser redirigido a la página de todos los productos
-    Y debería ver la lista de productos
-    Cuando hago clic en 'Ver producto' del primer producto
-    Entonces debería ser redirigido a la página de detalle del producto
-    Y debería ver los detalles del producto como: nombre, categoría, precio, disponibilidad, condición y marca
+  Scenario: Verificar todos los productos y la página de detalle de producto
+    Given que visito la página principal
+    When hago clic en el botón de productos
+    Then debería ser redirigido a la página de todos los productos
+    And debería ver la lista de productos
+    When hago clic en 'Ver producto' del primer producto
+    Then debería ser redirigido a la página de detalle del producto
+    And debería ver los detalles del producto como: nombre, categoría, precio, disponibilidad, condición y marca
     

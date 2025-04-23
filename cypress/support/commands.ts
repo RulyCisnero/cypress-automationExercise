@@ -89,23 +89,23 @@ Cypress.Commands.add("UserLoginSinEmailParametro", () => {
 
 
 Cypress.Commands.add("VerifyLoginWithOutEmailParameterAPI", () => {
-    cy.fixture("user.json").then((user) => {
-      cy.request({
-        method: 'POST',
-        url: "https://automationexercise.com/api/verifyLogin",
-        failOnStatusCode: false,
-        form: true,
-        body: {
-          password: user.existingUser.password
-        }
-      }).then((res) => {
-        const parsedBody = JSON.parse(res.body);
-        // Validación del responseCode
-        expect(parsedBody.responseCode).to.equal(400);
-        // Otras validaciones opcionales
-        expect(parsedBody.message).to.equal("Bad request, email or password parameter is missing in POST request.")
-      });
+  cy.fixture("user.json").then((user) => {
+    cy.request({
+      method: 'POST',
+      url: "https://automationexercise.com/api/verifyLogin",
+      failOnStatusCode: false,
+      form: true,
+      body: {
+        password: user.existingUser.password
+      }
+    }).then((res) => {
+      const parsedBody = JSON.parse(res.body);
+      // Validación del responseCode
+      expect(parsedBody.responseCode).to.equal(400);
+      // Otras validaciones opcionales
+      expect(parsedBody.message).to.equal("Bad request, email or password parameter is missing in POST request.")
     });
+  });
 });
 
 
@@ -453,7 +453,9 @@ Cypress.Commands.add("clickAddToCartByProductId", (id: number) => {
 */
 Cypress.Commands.add('verifySearchResultsMatchApi', (searchTerm: string) => {
   cy.get('.features_items .productinfo p').then(($uiProducts) => {
-    const uiNames = [...$uiProducts].map(p => p.innerText.trim().toLowerCase());
+    // Convertimos $uiProducts a un arreglo antes de usar map
+    const uiNames = $uiProducts.toArray().map((p: HTMLElement) => p.innerText.trim().toLowerCase());
+    //const uiNames = [...$uiProducts].map(p => p.innerText.trim().toLowerCase());
 
     cy.request({
       method: 'POST',
@@ -461,7 +463,7 @@ Cypress.Commands.add('verifySearchResultsMatchApi', (searchTerm: string) => {
       failOnStatusCode: false,
       form: true,
       body: {
-        search_product: searchTerm
+        search_product: (searchTerm)
       }
     }).then((res) => {
       const parsedBody = JSON.parse(res.body);
@@ -503,3 +505,26 @@ Cypress.Commands.add('verifyLoginInvalidAPI', () => {
   });
 });
 
+/**
+* Verifica que la búsqueda de productos sin el parámetro 'search_product' devuelva un error 400
+* @param 
+* no se le pasan parametros
+*/
+
+Cypress.Commands.add('SearchProductWithoutParameter', () => {
+  cy.request({
+    method: 'POST',
+    url: "https://automationexercise.com/api/searchProduct",
+    failOnStatusCode: false,
+    form: true,
+    body: {
+      // No se pasa el parámetro search_product
+    }
+  }).then((res) => {
+    const parsedBody = JSON.parse(res.body);
+    // Validación del responseCode
+    expect(parsedBody.responseCode).to.equal(400);
+    // Otras validaciones opcionales
+    expect(parsedBody.message).to.equal("Bad request, search_product parameter is missing in POST request.");
+  });
+});

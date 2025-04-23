@@ -40,11 +40,13 @@ export default defineConfig({
       return config;
     },
     specPattern: [
-      'cypress\\e2e\\Api-Test\\Test1\\**\\*',
+      'cypress/e2e/features/**/*.feature',
+       'cypress/e2e/UI-Tests/**',
     ],
     baseUrl: "https://www.automationexercise.com/",
-    excludeSpecPattern: ['cypress\e2e\Api-Test\Test1',
-      'cypress\e2e\Api-Test\Test1'
+    excludeSpecPattern: [
+      'cypress/e2e/Api-Test/**/*',
+      'cypress/e2e/UI-Tests/PruebaPom.cy.ts',
     ],
     screenshotOnRunFailure: true,
     video: false // Recomendado para Allure
