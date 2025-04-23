@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/RulyCisnero/cypress-automationExercise/main/portada/banner-cypress.png" alt="Cypress Automation Project" width="100%" />
+  <img src="https://raw.githubusercontent.com/RulyCisnero/cypress-automationExercise/main/Portada/banner-cypress.png" alt="Cypress Automation Project" width="100%" />
 </div>
 
 ## 📊 Cypress Automation Project
@@ -78,50 +78,40 @@ npx cypress run
       "clean:all": "npm run clean:allure && npm run clean:cypress"
     }
 ```
+
 📄 Reportes
 Allure Report
 
 Generación: npm run generate-allure-report
-
 Visualización: npm run open-allure-report
 
 Mochawesome Report (opcional):
-
 Merge: npm run report:merge
-
 Generar HTML: npm run report:generate
+
 
 ✅ Tests Implementados
 Registro de usuario (formulario + validación API)
-
 Login con credenciales válidas e inválidas
-
 Eliminación de usuario desde la UI y desde la API
-
 Validaciones cruzadas: respuesta API + visibilidad DOM
 
 
 👤 Usuarios
 Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por configuración.
 
+
 🧠 Buenas Prácticas Aplicadas
 Comandos personalizados (commands.ts) para lógica reutilizable
-
 Estructura modular con Page Object Model
-
 Agrupación de tests por tags (@smoke, @regression, etc.)
-
 Separación de tests (features/, Ui-Tests/)
-
 Tipado fuerte con TypeScript
 
 🔮 Mejoras Futuras
 Integración con CI/CD (GitHub Actions)
-
 Validación visual con Percy u otras herramientas
-
 Evidencias automáticas (PDFs, screenshots)
-
 Notificaciones por Slack o Email post ejecución
 
 ✍ Autor
