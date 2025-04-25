@@ -1,5 +1,4 @@
 export class CartPage{
-    cartPage: () => Cypress.Chainable<JQuery<HTMLElement>>;
     modalSignupLoginButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
     gridTable: () => Cypress.Chainable<JQuery<HTMLElement>>;
     checkoutButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
@@ -8,7 +7,6 @@ export class CartPage{
     placeOrderButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
 
     constructor(){
-        this.cartPage = () => cy.get('a[href="/view_cart"]');
         this.checkoutButton = () => cy.get('.btn.btn-default.check_out'); // Selector para el botón de "Checkout cy.get('.col-sm-6 .check_out')"
         this.gridTable = () =>cy.get('#cart_info_table') //grilla de productos
         this.modalSignupLoginButton = () => cy.get('.modal-content a[href="/login"]');
@@ -17,18 +15,14 @@ export class CartPage{
         this.placeOrderButton = () => cy.get('a.check_out'); // Selector para el botón de "Place Order"
     }
 
-    clickCartPage() {
-        this.cartPage().first().click(); // Click en el botón de "Cart"
-        cy.url().should('include', '/view_cart'); // Verifica que la URL contenga "/view_cart"
+    clickCheckoutButton() {
+        this.checkoutButton().should('be.visible').click(); // Click en el botón de "Checkout"
     }
 
     grillaDeProductosVisible() {
         this.gridTable().should('exist').should('be.visible'); // Verifica que la grilla de productos esté presente
     }
 
-    clickCheckoutButton() {
-        this.checkoutButton().should('be.visible').click(); // Click en el botón de "Checkout"
-    }
     clickAddToCartByProductId(id: string | number) {
         cy.get(`.single-products:has([data-product-id="${id}"])`).within(() => {
             cy.get('.product-overlay')
@@ -63,11 +57,15 @@ export class CartPage{
         cy.url().should('include', '/payment'); // Verifica que la URL contenga "/payment"
     }
 
+    //Elimina el producto del carrito segun el index (0)-> primer elemento
     removeProductFromCartByIndex(index: number) {
         cy.get('#cart_info_table tbody tr').eq(index).within(() => {
             cy.get('.cart_quantity_delete').click();
         });
     }
+    
+    //Usar cuando el carrito este vacio 
+    //Verificar que el producto fue eliminado y el carrito está vacío
     verifyCartIsEmpty() {
         cy.get('#empty_cart')
             .should('be.visible')

@@ -117,10 +117,6 @@ export class LoginPage {
         this.errorMsj = () => cy.get('.login-form > form > p');
     }
 
-    clickSignupLogin() {
-        return this.signupLoginButton().contains('Signup / Login').click();
-    }
-
     //verifico que New User Signup! esté visible
     verifyNewUserSignupVisible() {
         return this.newUserSignupTitle().contains('h2', 'New User Signup!').should('be.visible');

@@ -5,7 +5,7 @@ export class PaymentPage {
     expiryMonthField: () => Cypress.Chainable<JQuery<HTMLElement>>;
     expiryYearField: () => Cypress.Chainable<JQuery<HTMLElement>>;
     submitButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
-    successMessage: () => Cypress.Chainable<undefined>;
+    successMessage: () => Cypress.Chainable<JQuery<HTMLElement>>;
 
     constructor(){
     this.cardNameField = () => cy.get('input[name="name_on_card"]');
@@ -14,7 +14,8 @@ export class PaymentPage {
     this.expiryMonthField = () => cy.get('input[name="expiry_month"]');
     this.expiryYearField = () => cy.get('input[name="expiry_year"]');
     this.submitButton = () => cy.get('#submit');
-    this.successMessage = () => cy.contains('Congratulations! Your order has been confirmed!');  
+    this.successMessage = () => cy.get('.col-sm-9');
+    
     }
     
   
@@ -26,12 +27,14 @@ export class PaymentPage {
       this.expiryYearField().type(year);
     }
   
-    submitPayment() {
+    clickSubmitPayment() {
       this.submitButton().click();
     }
   
     verifySuccessMessage() {
-      this.successMessage().should('be.visible');
+      cy.url().should('include','/payment_done');
+      this.successMessage().find('p').contains('Congratulations! Your order has been confirmed!').should('be.visible');
+      //should('have.text', 'Congratulations! Your order has been confirmed!').should('be.visible');
     }
   }
   

@@ -23,7 +23,6 @@ Then('debería ver la lista de productos', () => {
 });
 
 When("hago clic en 'Ver producto' del primer producto", () => {
-  cy.wait(2000);
   productPage.clickfirstProduct();
 });
 

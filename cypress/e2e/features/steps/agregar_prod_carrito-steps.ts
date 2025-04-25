@@ -3,11 +3,13 @@ import { ProductPage } from "../../../support/ProductPage/ProductPage";
 import { CartPage } from "../../../support/CartPage/CartPage";
 import { HomePage } from "../../../support/HomePage/HomePage";
 import { ModalProductPage } from "../../../support/ProductPage/ModalProductPage";
+import { NavbarPage } from "../../../support/navbar/navbar";
 
 const productPage = new ProductPage();
 const cartPage = new CartPage();
 const homePage = new HomePage();
 const modal = new ModalProductPage();
+const navbarPage = new NavbarPage();
 
 Given("que visito la página de inicio para productos", () => {
   cy.visit('/');
@@ -16,11 +18,10 @@ Given("que visito la página de inicio para productos", () => {
 
 When("hago clic en el botón de productos para productos", () => {
   productPage.clickProductsButton();
-  cy.wait(2000);
 });
 
 When("agrego el primer producto al carrito para productos", () => {
-  cy.clickAddToCartByProductIdPASS(1); // Hover + clic
+  cy.clickAddToCartByProductIdPASS(1); 
 });
 
 When("hago clic en el botón 'Continuar comprando' para productos", () => {
@@ -32,7 +33,7 @@ When("agrego el segundo producto al carrito para productos", () => {
 });
 
 When("hago clic en el botón 'Ver carrito' para productos", () => {
-     cartPage.clickCartPage();
+     navbarPage.clickCartPage(); 
 });
 
 Then("debería ver ambos productos en el carrito para productos", () => {

@@ -1,5 +1,4 @@
-
-
+//usar como referencia si los productos cargan en la pagina 
 describe('API 3: Get All Brands List', () => {
     it('API 3: Get All Brands List', () => {
         cy.request({

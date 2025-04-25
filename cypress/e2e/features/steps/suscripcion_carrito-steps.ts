@@ -2,10 +2,12 @@ import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { CartPage } from "../../../support/CartPage/CartPage";
 import { FooterPage } from "../../../support/FooterPage/FooterPage";
 import { HomePage } from "../../../support/HomePage/HomePage";
+import { NavbarPage } from "../../../support/navbar/navbar";
 
 const cartPage = new CartPage();
 const footerPage = new FooterPage();
 const homePage = new HomePage();
+const navbarPage = new NavbarPage();  
 
 Given("I visit the home page", () => {
   cy.visit('/');
@@ -13,7 +15,7 @@ Given("I visit the home page", () => {
 });
 
 When("I click on the cart button", () => {
-  cartPage.clickCartPage(); 
+  navbarPage.clickCartPage();
 });
 
 When("I scroll to the footer", () => {

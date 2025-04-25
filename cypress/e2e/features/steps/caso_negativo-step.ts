@@ -9,7 +9,6 @@ Given("que visito la página principal -CN", () => {
     cy.clearCookies();
     cy.clearLocalStorage();
     cy.visit("/");
-    cy.wait(1000);
 });
 
 When("hago clic en el botón de Productos -CN", () => {
@@ -24,5 +23,4 @@ When("realizo una solicitud POST a la API de búsqueda sin pasar el parámetro '
 
 Then("la respuesta debe ser un error 400 con un mensaje indicando que el parámetro 'search_product' está ausente", () => {
     cy.SearchProductWithoutParameter();
-    cy.wait(2000);
 });

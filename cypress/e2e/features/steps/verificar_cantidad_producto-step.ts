@@ -1,10 +1,8 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { ProductPage } from "../../../support/ProductPage/ProductPage";
-import { CartPage } from "../../../support/CartPage/CartPage";
 import { HomePage } from "../../../support/HomePage/HomePage";
 
 const productPage = new ProductPage();
-const cartPage = new CartPage();
 const homePage = new HomePage();
 
 let cantidadSeleccionada: string;

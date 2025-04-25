@@ -24,7 +24,6 @@ When("ingreso {string} en el campo de búsqueda", (termino: string) => {
 
 When("hago clic en el botón de buscar", () => {
   productPage.clickSearchButton();
-  cy.wait(2000);
 });
 
 Then("debería ver el título de productos buscados", () => {

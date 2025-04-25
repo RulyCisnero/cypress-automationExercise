@@ -7,12 +7,10 @@ Given('I visit the homepage Automation', () => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.visit('/');
-  cy.wait(1000);
 });
 
 When('I click on the Contact Us button', () => {
   contactPage.clickContactUsButton();
-  cy.wait(2000);
 });
 
 When('I verify that the contact form is visible', () => {

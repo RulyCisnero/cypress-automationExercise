@@ -3,11 +3,13 @@ import { ProductPage } from "../../../support/ProductPage/ProductPage";
 import { CartPage } from "../../../support/CartPage/CartPage";
 import { LoginPage } from "../../../support/LoginPage/LoginPage";
 import { SidebarPage } from "../../../support/HomePage/Sidebar";
+import { NavbarPage } from "../../../support/navbar/navbar";
 
 const productPage = new ProductPage();
 const cartPage = new CartPage();
 const sidebar = new SidebarPage();
 const loginPage = new LoginPage();
+const navbarPage = new NavbarPage();
 
 Given('I visit the homepage for regression-test', () => {
   cy.visit('/');
@@ -28,7 +30,6 @@ When('I search for {string}', (productName: string) => {
 
 Then('I should see search results', () => {
   productPage.verifySearchResultsVisible();
-  cy.wait(2000);
 });
 
 When('I add all search results to the cart', () => {
@@ -36,7 +37,7 @@ When('I add all search results to the cart', () => {
 });
 
 When('I go to the Cart page', () => {
-  cartPage.clickCartPage();
+  navbarPage.clickCartPage();
 });
 
 Then('I should see at least one product in the cart', () => {
@@ -44,7 +45,7 @@ Then('I should see at least one product in the cart', () => {
 });
 
 When("I click the 'Signup-Login' button", () => {
-  loginPage.clickSignupLogin();
+  navbarPage.clickSignupLoginPage();
 });
 
 When('I register a new user', () => {
@@ -53,7 +54,7 @@ When('I register a new user', () => {
 });
 
 When('I go to the Cart page again', () => {
-  cartPage.clickCartPage();
+  navbarPage.clickCartPage();
 });
 
 Then('I should still see the product-s in the cart', () => {

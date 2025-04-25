@@ -3,11 +3,13 @@ import { ProductPage } from "../../../support/ProductPage/ProductPage";
 import { CartPage } from "../../../support/CartPage/CartPage";
 import { HomePage } from "../../../support/HomePage/HomePage";
 import { LoginPage } from "../../../support/LoginPage/LoginPage";
+import { NavbarPage } from "../../../support/navbar/navbar";
 
 const productPage = new ProductPage();
 const cartPage = new CartPage();
 const homePage = new HomePage();
 const loginPage = new LoginPage();  
+const navbarPage = new NavbarPage();
 
 Given("I visit the home page TC-14", () => {
   cy.visit('/');
@@ -53,7 +55,7 @@ Then("I should see 'Logged in as username'", () => {
 });
 
 When("I click the 'Cart' button", () => {
-  cartPage.clickCartPage();
+  navbarPage.clickCartPage();
 });
 
 Then("I should see address details and order summary", () => {
