@@ -11,32 +11,32 @@ const homePage = new HomePage();
 const modal = new ModalProductPage();
 const navbarPage = new NavbarPage();
 
-Given("que visito la página de inicio para productos", () => {
+Given("I visit the homepage for products", () => {
   cy.visit('/');
   homePage.verifyBannerPagina();
 });
 
-When("hago clic en el botón de productos para productos", () => {
+When("I click on the Products button", () => {
   productPage.clickProductsButton();
 });
 
-When("agrego el primer producto al carrito para productos", () => {
+When("I add the first product to the cart", () => {
   cy.clickAddToCartByProductIdPASS(1); 
 });
 
-When("hago clic en el botón 'Continuar comprando' para productos", () => {
+When("I click on the 'Continue Shopping' button", () => {
   modal.clickContinueShoppingButton(); //click en el botón "Continuar comprando" del modal
 });
 
-When("agrego el segundo producto al carrito para productos", () => {
+When("I add the second product to the cart", () => {
   cy.clickAddToCartByProductIdPASS(2);
 });
 
-When("hago clic en el botón 'Ver carrito' para productos", () => {
+When("I click on the 'View Cart' button", () => {
      navbarPage.clickCartPage(); 
 });
 
-Then("debería ver ambos productos en el carrito para productos", () => {
+Then("I should see both products in the cart", () => {
     cartPage.verifyProductInTheCart(); // Verifica que el/los productos esté en el carrito, al menos 1
 });
 

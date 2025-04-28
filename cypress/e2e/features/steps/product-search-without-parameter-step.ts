@@ -1,26 +1,24 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { ProductPage } from "../../../support/ProductPage/ProductPage";
-import { HomePage } from "../../../support/HomePage/HomePage";
 
 const productPage = new ProductPage();
-const homePage = new HomePage();
 
-Given("que visito la página principal -CN", () => {
+Given("I visit the main page -CN", () => {
     cy.clearCookies();
     cy.clearLocalStorage();
     cy.visit("/");
 });
 
-When("hago clic en el botón de Productos -CN", () => {
+When("I click on the Products button -CN", () => {
     productPage.clickProductsButton();
 });
 
-When("realizo una solicitud POST a la API de búsqueda sin pasar el parámetro 'search_product'", () => {
+When("I make a POST request to the search API without the 'search_product' parameter", () => {
     productPage.verifyAllProductsPageVisible();
     productPage.productListVisible();
     productPage.clickSearchButton();
 });
 
-Then("la respuesta debe ser un error 400 con un mensaje indicando que el parámetro 'search_product' está ausente", () => {
+Then("the response should return a 400 error with a message indicating the 'search_product' parameter is missing", () => {
     cy.SearchProductWithoutParameter();
 });

@@ -5,31 +5,31 @@ import { ProductPage } from "../../../support/ProductPage/ProductPage";
 const homePage = new HomePage();
 const productPage = new ProductPage();
 
-Given('que visito la página principal', () => {
+Given('I visit the main page', () => {
   cy.visit('/');
   homePage.verifyBannerPagina(); // o el método que tengas para verificar home
 });
 
-When('hago clic en el botón de productos', () => {
+When('I click on the Products button -VFP', () => {
   productPage.clickProductsButton();
 });
 
-Then('debería ser redirigido a la página de todos los productos', () => {
+Then('I should be redirected to the All Products page', () => {
   productPage.verifyAllProductsPageVisible();
 });
 
-Then('debería ver la lista de productos', () => {
+Then('I should see the list of products', () => {
   productPage.productListVisible();
 });
 
-When("hago clic en 'Ver producto' del primer producto", () => {
+When("I click on 'View Product' of the first product", () => {
   productPage.clickfirstProduct();
 });
 
-Then('debería ser redirigido a la página de detalle del producto', () => {
+Then('I should be redirected to the Product Detail page', () => {
   productPage.verifyUserIsOnProductDetailPage();
 });
 
-Then('debería ver los detalles del producto como: nombre, categoría, precio, disponibilidad, condición y marca', () => {
+Then('I should see the product details such as: name, category, price, availability, condition, and brand', () => {
   productPage.verifyProductDetails();
 });

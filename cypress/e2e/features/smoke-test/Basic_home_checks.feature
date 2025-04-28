@@ -1,17 +1,17 @@
 @smoke
-Feature: Verificaciones básicas del home
+Feature: Basic home checks
 
-  Scenario: Se visualiza correctamente el banner principal
+  Scenario: The main banner is displayed correctly
     Given I visit the home page
     Then I should see the main banner
 
-  Scenario: El usuario puede suscribirse al newsletter
+  Scenario: The user can subscribe to the newsletter
     Given I visit the home page
     When I write a valid email
     And I click the subscribe button
     Then I should see the success subscription message
 
-  Scenario: El login se muestra correctamente
+  Scenario: The login is displayed correctly
     Given I visit the home page
     When I click the 'Register-Login' button
     Then I should see the login-signup form

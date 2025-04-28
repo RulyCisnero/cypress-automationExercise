@@ -14,11 +14,9 @@ Given('I visit the home page sanity-steps', () => {
     cy.clearCookies();
     cy.clearLocalStorage();
     cy.visit('/');
-    homePage.verifyBannerPagina(); // verifica que la página cargó bien
+    homePage.verifyBannerPagina(); 
 });
 
-
-//----1)Logeo con credenciales validas 
 
 When("I click the 'Register-Login' button sanity-steps", () => {
     navbarPage.clickSignupLoginPage(); 
@@ -38,12 +36,12 @@ When('I navigate to the products page sanity-steps', () =>{
 })
 
 When('I add a product to the cart',()=>{
-    cy.clickAddToCartByProductIdPASS(1); 
+    cy.clickAddToCartByProductIdPASS(1);
 });
 
     
 Then('I should see the product in the cart',()=>{
-    navbarPage.clickCartPage();
+    cartPage.clickViewCartButtonModal();
     cartPage.verifyProductInTheCart();
 })
 

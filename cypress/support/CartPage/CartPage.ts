@@ -5,11 +5,13 @@ export class CartPage{
     detailsInformation: () => Cypress.Chainable<JQuery<HTMLElement>>;
     enterText: () => Cypress.Chainable<JQuery<HTMLElement>>;
     placeOrderButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
+    modalViewCartButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
 
     constructor(){
         this.checkoutButton = () => cy.get('.btn.btn-default.check_out'); // Selector para el botón de "Checkout cy.get('.col-sm-6 .check_out')"
         this.gridTable = () =>cy.get('#cart_info_table') //grilla de productos
         this.modalSignupLoginButton = () => cy.get('.modal-content a[href="/login"]');
+        this.modalViewCartButton = () => cy.get('.modal-content a[href="/view_cart"]'); // Selector para el botón de "View Cart" dentro del modal   
         this.detailsInformation = () =>  cy.get('.checkout-information'); // Selector para la información del producto
         this.enterText = () => cy.get('textarea[name="message"]') // Selector para el campo de texto
         this.placeOrderButton = () => cy.get('a.check_out'); // Selector para el botón de "Place Order"
@@ -38,6 +40,11 @@ export class CartPage{
     clickLoginButtonModal() {
         this.modalSignupLoginButton().click(); // Click en el botón de "Login" dentro del modal
         cy.url().should('include', '/login'); // Verifica que la URL contenga "/login" 
+    }
+
+    clickViewCartButtonModal() {
+        this.modalViewCartButton().click(); // Click en el botón de "View Cart" dentro del modal
+        cy.url().should('include', '/view_cart'); // Verifica que la URL contenga "/view_cart"
     }
 
     verifyDetailsInformationVisible() {

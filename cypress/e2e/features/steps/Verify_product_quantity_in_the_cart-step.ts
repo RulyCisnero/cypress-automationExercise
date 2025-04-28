@@ -7,27 +7,27 @@ const homePage = new HomePage();
 
 let cantidadSeleccionada: string;
 //-vp (Verificar Producto)
-Given("que visito la página de inicio -VP", () => {
+Given("I visit the homepage -VP", () => {
   cy.visit('/');
   homePage.verifyBannerPagina();
 });
 
-When("hago clic en 'Ver producto' de un producto", () => {
+When("I click on 'View Product' for a product", () => {
   productPage.clickViewProductButton(4); // o cualquier índice
 });
 
-Then("debería ver los detalles del producto", () => {
+Then("I should see the product details", () => {
   productPage.verifyProductDetails2();
 });
 
-When("aumento la cantidad a {int}", (cantidad: number) => {
+When("I increase the quantity to {int}", (cantidad: number) => {
   cantidadSeleccionada = productPage.addQuantity(cantidad.toString());
 });
 
-When("hago clic en el botón 'Agregar al carrito' y me redirecciona a carrito", () => {
+When("I click on the 'Add to Cart' button and get redirected to the cart", () => {
   productPage.clickaddToCart();
 });
 
-Then("debería ver el producto con la cantidad correcta en el carrito", () => {
+Then("I should see the product with the correct quantity in the cart", () => {
   productPage.verifyQuantityInCart(cantidadSeleccionada);
 });
