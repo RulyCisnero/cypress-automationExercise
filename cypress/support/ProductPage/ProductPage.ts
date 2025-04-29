@@ -21,8 +21,6 @@ export class ProductPage {
         this.listProducts = () => cy.get('.features_items .col-sm-4');
         this.search = () => cy.get('#search_product'); // Selector para el campo de búsqueda
         this.searchButton = () => cy.get('#submit_search'); // Selector para el botón de búsqueda
-
-
         this.productInformation = () => cy.get('.product-information'); // Selector para la información del producto
         this.name = () => cy.get('h2'); // Selector para el nombre del producto
         this.category = () => cy.get('p.category'); // Selector para la categoría del producto
@@ -30,19 +28,12 @@ export class ProductPage {
         this.availability = () => cy.get('p.availability'); // Selector para la disponibilidad del producto
         this.condition = () => cy.get('p.condition'); // Selector para la condición del producto
         this.brand = () => cy.get('p.brand'); // Selector para la marca del producto
-
         this.searchResultsNames = () => cy.get('.features_items .productinfo p:first-child');
-
         this.tarjetaProducto = () => cy.get('.choose');
         this.quantity = () => cy.get("#quantity")
-
-
     }
 
-    clickProductsButton() {
-        this.products().click();
-    }
-
+    
     verifyAllProductsPageVisible() {
         cy.get('.features_items').should('exist'); // Verifica que el contenedor principal esté presente
 
@@ -61,7 +52,7 @@ export class ProductPage {
             .first()
             .find('a[href*="product_details"]')
             .click();
-    }
+        }
 
     verifyUserIsOnProductDetailPage() {
         cy.url().should('include', '/product_details/');
@@ -76,11 +67,6 @@ export class ProductPage {
             cy.contains('p', 'Availability: In Stock').should('be.visible');
             cy.contains('p', 'Condition: New').should('be.visible');
             cy.contains('p', 'Brand:').should('be.visible');
-           /*  this.category().contains('Category').should('be.visible');
-            this.price().contains('Rs.').should('be.visible'); // price
-            this.availability().contains('p', 'Availability: In Stock').should('be.visible');
-            this.condition().contains('p', 'Condition: New').should('be.visible');
-            this.brand().contains('p', 'Brand: Polo').should('be.visible'); */
         });
     }
 
@@ -99,15 +85,15 @@ export class ProductPage {
             .should('exist')         // Verifica que exista
             .should('be.visible')
             .click();
-    }
+        }
 
     verifySearchedProductsTitle() {
         cy.contains('h2', 'Searched Products').should('be.visible'); // Verifica que el título "Searched
     }
-
+    
     verifySearchResultsVisible() {
         cy.get('.features_items .productinfo')
-            .should('have.length.greaterThan', 0) // Asegura que hay productos
+        .should('have.length.greaterThan', 0) // Asegura que hay productos
             .each(($el) => {
                 cy.wrap($el).should('be.visible'); // Cada uno debe estar visible
             });
@@ -130,7 +116,6 @@ export class ProductPage {
             cy.contains('p', 'Condition: New').should('be.visible');
             cy.contains('p', 'Brand:').should('be.visible');
             cy.contains('Quantity:').should('be.visible');
-            //cy.contains('button', 'Add to cart').should('be.visible');
         });
     }
 
@@ -138,26 +123,30 @@ export class ProductPage {
         this.quantity().clear().type('4'); // Cambia el valor del input de cantidad    
         return quantity; // Devuelve la cantidad ingresada
     }
-   
+    
     clickaddToCart() {
         cy.get('.product-information').contains("Add to cart").click(); // Cambia el selector al correcto para el botón "Add to cart"
         cy.get('.modal-dialog').should('be.visible'); // Verifica que el modal esté visible
         cy.contains("View Cart").click();
     }
-
+    
     /**
-    *Verifica que la cantidad del primer producto en el carrito coincida con la esperada.
-    *
-    * @param {string | number} expectedQuantity - Cantidad esperada en el carrito.
-    */
+     *Verifica que la cantidad del primer producto en el carrito coincida con la esperada.
+     *
+     * @param {string | number} expectedQuantity - Cantidad esperada en el carrito.
+     */
     verifyQuantityInCart(expectedQuantity) {
         cy.get('#cart_info_table').within(() => {
             cy.get('tr[id^="product-"]').first().within(() => {
                 cy.get('.cart_quantity button.disabled')
-                    .should('be.visible')
-                    .and('have.text', expectedQuantity);
+                .should('be.visible')
+                .and('have.text', expectedQuantity);
             });
         });
     }
 
+    clickProductsButton() {
+        this.products().click();
+    }
+    
 }

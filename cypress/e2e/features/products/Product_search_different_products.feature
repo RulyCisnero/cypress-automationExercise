@@ -1,4 +1,4 @@
-@smoke
+@sanity
 Feature: Product search
 
   Scenario Outline: Search for different products by name

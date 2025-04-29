@@ -28,7 +28,7 @@ export class CartPage{
     clickAddToCartByProductId(id: string | number) {
         cy.get(`.single-products:has([data-product-id="${id}"])`).within(() => {
             cy.get('.product-overlay')
-                .invoke('css', 'display', 'block') // Forzar a que se muestre
+                .invoke('css', 'display', 'block') // Forzar a que se muestre desplegable de tarjeta
                 .should('be.visible');
 
             cy.get('.product-overlay .add-to-cart')
@@ -36,7 +36,13 @@ export class CartPage{
                 .click({ force: true });
         });
     }
-
+    
+    verifyDetailsInformationVisible() {
+        this.detailsInformation().should('exist').should('be.visible'); // Verifica que la información del producto esté presente
+        cy.contains('Address Details').should('exist');
+        cy.contains('Review Your Order').should('exist');
+    }
+    
     clickLoginButtonModal() {
         this.modalSignupLoginButton().click(); // Click en el botón de "Login" dentro del modal
         cy.url().should('include', '/login'); // Verifica que la URL contenga "/login" 
@@ -47,13 +53,6 @@ export class CartPage{
         cy.url().should('include', '/view_cart'); // Verifica que la URL contenga "/view_cart"
     }
 
-    verifyDetailsInformationVisible() {
-        this.detailsInformation().should('exist').should('be.visible'); // Verifica que la información del producto esté presente
-        cy.contains('Address Details').should('exist');
-        cy.contains('Review Your Order').should('exist');
-    }
-
-  
 
     addOrderNote(text: string) {
         this.enterText().type(text); 

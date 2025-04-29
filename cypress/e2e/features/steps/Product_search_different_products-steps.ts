@@ -9,7 +9,6 @@ Given("I visit the main page -BP", () => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.visit("/");
-  cy.wait(1000);
 });
 
 When("I click on the Products button -BP", () => {
