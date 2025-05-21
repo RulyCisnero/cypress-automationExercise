@@ -1,6 +1,7 @@
 import { HomePage } from "../../support/HomePage/HomePage";
 import { LoginPage } from "../../support/LoginPage/LoginPage";
 import { NavbarPage } from "../../support/navbar/navbar";
+import * as userDataFixture from '../../fixtures/user.json';
 
 const homePage = new HomePage();
 const loginPage = new LoginPage();
@@ -39,7 +40,7 @@ describe('Authentication Suite', () => {
 
     it("Login User with incorrect email and password + API", () => {
         navbarPage.clickSignupLoginPage();
-        cy.UserLoginCredencialesInvalidas();
+        cy.UserLoginCredencialesInvalidas(userDataFixture);
         cy.verifyLoginInvalidAPI();
         loginPage.clickLoginButton();
         loginPage.verifyErrorMsj();

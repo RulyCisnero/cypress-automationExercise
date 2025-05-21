@@ -25,7 +25,6 @@
   },
   "existingUser": {
     "name": "peditoQA",
-    "email": "Pedritotest@qa.com",
-    "password": "test1234"
+    "email": "Pedritotest@qa.com"
   }
 }

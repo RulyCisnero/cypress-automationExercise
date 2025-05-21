@@ -1,4 +1,5 @@
 import { Given, When, Then, } from "@badeball/cypress-cucumber-preprocessor";
+import * as userDataFixture from '../../../fixtures/user.json';
 import { LoginPage } from "../../../support/LoginPage/LoginPage";
 import { HomePage } from "../../../support/HomePage/HomePage";
 import { NavbarPage } from "../../../support/navbar/navbar";
@@ -29,7 +30,7 @@ Then('You should have logged in successfully, username appears on screen login-s
 });
 
 When('I enter invalid email and password login-steps2', () => {
-    cy.UserLoginCredencialesInvalidas();
+    cy.UserLoginCredencialesInvalidas(userDataFixture);
     cy.verifyLoginInvalidAPI();
     loginPage.clickLoginButton();
 });

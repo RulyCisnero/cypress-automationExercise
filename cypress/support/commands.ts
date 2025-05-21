@@ -22,17 +22,14 @@ Cypress.Commands.add("UserLogin", () => {
 
 /**
 * Rellena el formulario de login con credenciales inválidas.
-* @param {Object} user - Objeto que contiene el email del usuario.
-* @param {string} user.existingUser.password - El password del usuario.
-* @param {string} - Email inválido
-* @param user Objeto con los datos del usuario.
+* El email es hardcodeado y la contraseña se obtiene de las variables de entorno de Cypress.
+* @param {Object} userData - Objeto que representa los datos del usuario (actualmente no se usa directamente en la función, pero se mantiene por consistencia).
 */
-Cypress.Commands.add("UserLoginCredencialesInvalidas", () => {
-  cy.fixture("user.json").then((user) => {
-    const signupPage = new LoginPage();
-    signupPage.enterEmailAndPassword("invalid_user@example.com", user.existingUser.password);
-    //verifyLoginInvalidAPI();
-  });
+Cypress.Commands.add("UserLoginCredencialesInvalidas", (userData) => {
+  const signupPage = new LoginPage();
+  const password = Cypress.env("existingUserPassword");
+  signupPage.enterEmailAndPassword("invalid_user@example.com", password);
+  //verifyLoginInvalidAPI();
 });
 
 /**
