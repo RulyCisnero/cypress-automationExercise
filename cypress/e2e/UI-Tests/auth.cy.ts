@@ -12,7 +12,6 @@ describe('Authentication Suite', () => {
         cy.clearCookies();
         cy.clearLocalStorage();
         cy.visit('/');
-        
         homePage.verifyBannerPagina();
     })
 
