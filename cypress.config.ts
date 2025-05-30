@@ -2,8 +2,9 @@ import { defineConfig } from "cypress";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
-//import allureWriter from '@shelex/cypress-allure-plugin/writer';
-const allureWriter = require('@shelex/cypress-allure-plugin/writer');
+import allureWriter from '@shelex/cypress-allure-plugin/writer';
+
+//const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 
 export default defineConfig({
