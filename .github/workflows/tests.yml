@@ -1,5 +1,6 @@
 name: Cypress Tests CI
 
+# 🔁 Triggers: Ejecutar en cada push o PR sobre main
 on:
   push:
     branches: [main]
@@ -8,30 +9,49 @@ on:
 
 jobs:
   run-smoke-tests:
-    name: Smoke Tests
+    name: 🔍 Smoke Tests
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      # 1️⃣ Clonar el repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      # 2️⃣ Instalar Node.js
+      - name: ⚙️ Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
+      # 3️⃣ Instalar dependencias del proyecto
+      - name: 📦 Install dependencies
         run: npm ci
 
-      - name: Run Smoke Tests
+      # 4️⃣ Ejecutar los tests (con Allure habilitado)
+      - name: 🚀 Run Smoke Tests (Cypress)
+        env:
+          CYPRESS_ALLURE: true
         run: npm run test:smoke
 
-      - name: Generate Allure Report
+      # 5️⃣ Mostrar qué se generó en allure-results
+      - name: 🔍 Debug allure-results
+        run: ls -R allure-results || echo "⚠️ No se generó nada en allure-results"
+
+      # 6️⃣ Generar el reporte Allure a partir de allure-results
+      - name: 🛠 Generate Allure Report
         run: npm run generate-allure-report
 
-      - name: Upload Allure Report
+      # 7️⃣ Subir el reporte como artefacto descargable desde la pestaña "Actions"
+      - name: 📤 Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-smoke
           path: allure-report
 
-  
+      # 8️⃣ (Opcional) Publicar el reporte como sitio web en GitHub Pages
+      - name: 🌐 Deploy Allure Report to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./allure-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
