@@ -1,0 +1,33 @@
+name: 🚀 Release Allure Report
+
+on:
+  workflow_dispatch:  # Solo se ejecuta manualmente desde GitHub Actions
+
+jobs:
+  run-full-suite:
+    name: Run all critical tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🛠 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run ALL tests (UI + Features)
+        run: npm run test:all
+
+      - name: 🧷 Generate Allure Report
+        run: npm run generate-allure-report
+
+      - name: 🚀 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
