@@ -122,7 +122,6 @@ Cypress.Commands.add("verifyLoginAccountVisibleUserExist", () => {
 
 
 /**
- * 
  * Verifica que la cuenta de usuario esté visible.
  * @param {Object} user - Objeto que contiene el nombre del usuario.
  * @param {string} user.name - El nombre del usuario.
