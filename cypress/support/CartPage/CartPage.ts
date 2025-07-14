@@ -8,7 +8,7 @@ export class CartPage{
     modalViewCartButton: () => Cypress.Chainable<JQuery<HTMLElement>>;
 
     constructor(){
-        this.checkoutButton = () => cy.get('.btn.btn-default.check_out'); // Selector para el botón de "Checkout cy.get('.col-sm-6 .check_out')"
+        this.checkoutButton = () => cy.get('.btn.btn-default.check_out'); //Selector para el botón de "Checkout cy.get('.col-sm-6 .check_out')"
         this.gridTable = () =>cy.get('#cart_info_table') //grilla de productos
         this.modalSignupLoginButton = () => cy.get('.modal-content a[href="/login"]');
         this.modalViewCartButton = () => cy.get('.modal-content a[href="/view_cart"]'); // Selector para el botón de "View Cart" dentro del modal   
