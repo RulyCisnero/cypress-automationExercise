@@ -43,7 +43,7 @@ jobs:
           publish_dir: ./allure-report
           destination_dir: products
 
-       - name: Add Comment to Jira Tickets
+      - name: Add Comment to Jira Tickets
         env:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
