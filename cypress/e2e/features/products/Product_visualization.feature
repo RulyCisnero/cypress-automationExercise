@@ -1,4 +1,4 @@
-@smoke
+@JIRA:SCRUM-8 @smoke
 Feature: Product visualization
 
   Scenario: Verify all products and the product detail page

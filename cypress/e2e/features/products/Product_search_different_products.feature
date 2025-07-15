@@ -1,6 +1,5 @@
-@sanity
-Feature: Product search
-   @owner:Ruly @severity:critical
+@JIRA:SCRUM-7 @sanity
+Feature: Product search 
   Scenario Outline: Search for different products by name
     Given  I visit the main page -BP
     When I click on the Products button -BP

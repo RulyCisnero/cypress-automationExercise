@@ -1,4 +1,4 @@
-@smoke
+@JIRA:SCRUM-9 @smoke
 Feature: Verify product quantity in the cart
 
   Scenario: The user selects a specific quantity of a product and verifies it in the cart

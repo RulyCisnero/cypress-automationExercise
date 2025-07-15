@@ -1,4 +1,4 @@
-@negativo
+@JIRA:SCRUM-10 @negativo
 Feature:  Product search without passing "product" parameter
 
 # Caso negativo (-CN): Probar la API cuando no se pasa el parámetro "search_product"

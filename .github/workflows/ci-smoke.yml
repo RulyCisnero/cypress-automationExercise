@@ -1,11 +1,7 @@
 name: Cypress Tests CI
 
-# 🔁 Triggers: Ejecutar en cada push o PR sobre main
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   run-smoke-tests:

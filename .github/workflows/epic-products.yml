@@ -1,0 +1,51 @@
+name: 🧪 Epic - Products Tests
+
+on:
+  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub Actions
+  push:
+    branches: [main]  # Opcional si querés que se ejecute en cada push
+
+jobs:
+  run-products-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Products Tests
+        run: |
+          npx cypress run \
+            --env allure=true \
+            --config specPattern='cypress/e2e/features/products/*.feature'
+
+      - name: Generate Allure Report
+        run: npm run generate-allure-report
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-products
+          path: allure-report
+
+      - name: Deploy Allure Report to GitHub Pages (Products)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          destination_dir: products
+
+       - name: Add Comment to Jira Tickets
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        run: node .github/scripts/comment-to-jira.js
