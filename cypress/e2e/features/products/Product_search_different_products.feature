@@ -1,4 +1,4 @@
-@JIRA:SCRUM-7 @sanity
+@JIRA:AEQ-5 @sanity
 Feature: Product search 
   Scenario Outline: Search for different products by name
     Given  I visit the main page -BP

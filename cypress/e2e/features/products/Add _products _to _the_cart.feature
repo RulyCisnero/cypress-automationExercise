@@ -1,4 +1,4 @@
-@JIRA:SCRUM-6 @smoke @owner:Ruly @severity:critical
+@JIRA:AEQ-3 @smoke @owner:Ruly @severity:critical
 Feature: Add products to the cart
     Scenario: The user adds two products to the cart from the products page
     Given I visit the homepage for products
