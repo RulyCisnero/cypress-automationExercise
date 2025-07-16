@@ -47,7 +47,15 @@ npx cypress open
 
 # Correr tests en headless mode (CLI)
 npx cypress run
+
+# Correr tests E2E
+npm run test:features
+
+# Generar Allure Report
+npm run generate-allure-report
+npm run open-allure-report
 ```
+
 🧪 Comandos de Test
 ```bash
 "scripts": {
@@ -80,55 +88,56 @@ npx cypress run
 ```
 
 📄 Reportes
-Allure Report
+📌 Allure Report (CI)
+✅ Reporte generado automáticamente por GitHub Actions
+🔗 Ver reporte de ejemplo
 
-Generación: npm run generate-allure-report
+📌 Mochawesome (local)
+  Merge: npm run report:merge
+  HTML: npm run report:generate
 
-Visualización: npm run open-allure-report
+🛠 Integraciones
+☁ GitHub Actions
+  Cada push activa un workflow de CI que:
+  Corre los tests marcados con tags.
+  Genera y publica el reporte Allure.
+  Comenta automáticamente los issues de Jira con el resultado del test.
 
-Mochawesome Report (opcional):
-
-Merge: npm run report:merge
-
-Generar HTML: npm run report:generate
-
+📌 Jira Software Cloud
+  Se extraen automáticamente los tags del tipo @JIRA:AEQ-7 de los .feature y se publica un comentario con el enlace al reporte Allure.
+```bash
+  @JIRA:AEQ-7 @smoke @owner:Ruly @severity:critical
+  Feature: Agregar producto al carrito
+```
+🎯 Esto permite rastrear qué test se ejecutó para cada historia de usuario.
 
 ✅ Tests Implementados
-
-Registro de usuario (formulario + validación API)
-
-Login con credenciales válidas e inválidas
-
-Eliminación de usuario desde la UI y desde la API
-
-Validaciones cruzadas: respuesta API + visibilidad DOM
+  Registro de usuario (formulario + validación API)
+  Login con credenciales válidas e inválidas
+  Eliminación de usuario desde la UI y desde la API
+  Navegación en productos y categorías
+  Agregar productos al carrito
+  Checkout y validación final
+  Validaciones cruzadas: respuesta API + visibilidad DOM
 
 
 👤 Usuarios
-Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por configuración.
+  Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por configuración.
 
 
 🧠 Buenas Prácticas Aplicadas
-
-Comandos personalizados (commands.ts) para lógica reutilizable
-
-Estructura modular con Page Object Model
-
-Agrupación de tests por tags (@smoke, @regression, etc.)
-
-Separación de tests (features/, Ui-Tests/)
-
-Tipado fuerte con TypeScript
+  Comandos personalizados (commands.ts) para lógica reutilizable
+  Estructura modular con Page Object Model
+  Agrupación de tests por tags (@smoke, @regression, etc.)
+  Separación de tests (features/, Ui-Tests/)
+  Tipado fuerte con TypeScript
 
 🔮 Mejoras Futuras
-
-Integración con CI/CD (GitHub Actions)
-
-Validación visual con Percy u otras herramientas
-
-Evidencias automáticas (PDFs, screenshots)
-
-Notificaciones por Slack o Email post ejecución
+  CI con ambientes paralelos (Matrix)
+  Integración con Slack
+  Notificaciones por Slack o Email post ejecución
 
 ✍ Autor
-Desarrollado por Raul Cisnero, con fines educativos y profesionales.
+  Desarrollado por Raul Cisnero, con fines educativos y profesionales.
+  📫 raulecisnero@gmail.com
+  🔗 LinkedIn
