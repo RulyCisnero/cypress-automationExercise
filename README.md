@@ -12,14 +12,14 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
 
 - [🚀 Tecnologías](#-tecnologías)
 - [⚙ Cómo Ejecutar](#-cómo-ejecutar)
-- [🧪 Comandos de Test](#Comandos-de-Test)
-- [📄 Reportes](#Reportes)
-- [🛠 Integraciones](#Integraciones)
-- [✅ Tests Implementados](#Tests-implementados)
-- [👤 Usuarios](#Usuarios)
-- [🧠 Buenas Prácticas Aplicadas](#Buenas-prácticas-aplicadas)
-- [🛠 CI/CD (GitHub Actions)](#CI/CD-(GitHub-Actions))
-- [✍ Autor](#Autor)
+- [🧪 Comandos de Test](#-Comandos-de-Test)
+- [📄 Reportes](#-Reportes)
+- [🛠 Integraciones](#-Integraciones)
+- [✅ Tests Implementados](#-Tests-implementados)
+- [👤 Usuarios](#-Usuarios)
+- [🧠 Buenas Prácticas Aplicadas](#-Buenas-prácticas-aplicadas)
+- [🛠 CI/CD (GitHub Actions)](#-CI/CD-(GitHub-Actions))
+- [✍ Autor](#-Autor)
 
 ---
 
@@ -59,12 +59,18 @@ npm install
 npx cypress open
 
 # Correr tests en headless mode (CLI)
-npx cypress run
+npx cypress test:cy
 
-# Correr tests E2E
+# Correr tests en headless mode de las features
 npm run test:features
 
-# Generar Allure Report
+# Correr todo los tests en headless mode 
+npm run test:all
+
+# Generar Allure Report localmente
+npm run generate-local-report
+
+# Generar Allure Report + live server de allure report
 npm run generate-allure-report
 npm run open-allure-report
 ```
@@ -122,9 +128,9 @@ HTML: npm run report:generate
 ---
 
 ### 🛠 Integraciones
-☁ GitHub Actions
+☁ **GitHub Actions**
 
-Cada push activa un workflow de CI que:
+**Cada push activa un workflow de CI que:**
 
 Corre los tests marcados con tags.
 
@@ -132,13 +138,15 @@ Genera y publica el reporte Allure.
 
 Comenta automáticamente los issues de Jira con el resultado del test.
 
-🔗 Integración con Jira
+Modo manual para correr todos los test.
 
-Cada feature contiene un tag @JIRA:AEQ-6 que vincula los tests con historias del proyecto real (AEQ = Automation Exercise QA).
+🔗 **Integración con Jira**
 
-✔ El script comment-to-jira.js detecta los tags y comenta automáticamente en los tickets asociados.
+Cada **feature** contiene un tag **@JIRA:AEQ-6** que vincula los tests con historias del proyecto real (AEQ = Automation Exercise QA).
 
-🛠 Configurado mediante secretos: JIRA_EMAIL, JIRA_TOKEN, JIRA_BASE_URL.
+✔ El script **comment-to-jira.js** detecta los tags y comenta automáticamente en los tickets asociados.
+
+🛠 Configurado mediante secretos: **JIRA_EMAIL, JIRA_TOKEN, JIRA_BASE_URL**.
 
 
 📌 Jira Software Cloud
@@ -221,4 +229,5 @@ jobs:
 ### ✍ Autor
 Desarrollado por Raul Cisnero, con fines educativos y profesionales.
 📫 raulecisnero@gmail.com
+
 🔗<a href="https://www.linkedin.com/in/ra%C3%BAl-cisnero/">Linkedin</a>
