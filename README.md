@@ -34,6 +34,17 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
   <img src="https://img.shields.io/badge/Mochawesome-007ACC?style=for-the-badge" />
 </p>
 
+| Herramienta        | Propósito                                        |
+| ------------------ | ------------------------------------------------ |
+| **Cypress**        | Testing End-to-End                               |
+| **TypeScript**     | Tipado estático y robustez del código            |
+| **Cucumber**       | Sintaxis Gherkin para pruebas legibles           |
+| **Allure**         | Reportes visuales con historial                  |
+| **GitHub Actions** | CI/CD: ejecución automática + subida de reportes |
+| **Jira**           | Gestión de historias de usuario y trazabilidad   |
+| **Mochawesome**    | Reporte HTML alternativo                         |
+
+
 ---
 
 ### ⚙ Cómo Ejecutar
@@ -56,7 +67,7 @@ npm run generate-allure-report
 npm run open-allure-report
 ```
 
-🧪 Comandos de Test
+### 🧪 Comandos de Test
 ```bash
 "scripts": {
       "test:cy": "npx cypress run",
@@ -87,7 +98,7 @@ npm run open-allure-report
     }
 ```
 
-📄 Reportes
+### 📄 Reportes
 
 📌 Allure Report (CI)
 
@@ -128,19 +139,19 @@ Validaciones cruzadas: respuesta API + visibilidad DOM
 Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por configuración.
 
 
-🧠 Buenas Prácticas Aplicadas
+### 🧠 Buenas Prácticas Aplicadas
 Comandos personalizados (commands.ts) para lógica reutilizable
 Estructura modular con Page Object Model
 Agrupación de tests por tags (@smoke, @regression, etc.)
 Separación de tests (features/, Ui-Tests/)
 Tipado fuerte con TypeScript
 
-🔮 Mejoras Futuras
+### 🔮 Mejoras Futuras
 CI con ambientes paralelos (Matrix)
 Integración con Slack
 Notificaciones por Slack o Email post ejecución
 
-✍ Autor
+### ✍ Autor
 Desarrollado por Raul Cisnero, con fines educativos y profesionales.
 📫 raulecisnero@gmail.com
 🔗 LinkedIn
