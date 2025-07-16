@@ -32,6 +32,9 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
   <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" />
   <img src="https://img.shields.io/badge/Allure-FF4088?style=for-the-badge&logo=allure&logoColor=white" />
   <img src="https://img.shields.io/badge/Mochawesome-007ACC?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/jira-blue?style=for-the-badge&logo=jira&logoColor=white" />
+  <img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original-wordmark.svg" />
+  <img src="https://github.com/devicons/devicon/blob/master/icons/githubactions/githubactions-original.svg" />
 </p>
 
 | Herramienta        | Propósito                                        |
