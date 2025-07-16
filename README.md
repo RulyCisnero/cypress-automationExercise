@@ -14,11 +14,12 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
 - [⚙ Cómo Ejecutar](#-cómo-ejecutar)
 - [🧪 Comandos de Test](#comandos-de-test)
 - [📄 Reportes](#reportes)
+- [🛠 Integraciones](#Integraciones)
 - [✅ Tests Implementados](#tests-implementados)
 - [👤 Usuarios](#usuarios)
 - [🧠 Buenas Prácticas Aplicadas](#buenas-prácticas-aplicadas)
-- [🔮 Mejoras Futuras](#mejoras-futuras)
-- [✍ Autor](#autor)
+- [🛠 CI/CD (GitHub Actions)](#CI/CD-(GitHub-Actions))
+- [✍ Autor](#Autor)
 
 ---
 
@@ -33,8 +34,6 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
   <img src="https://img.shields.io/badge/Allure-FF4088?style=for-the-badge&logo=allure&logoColor=white" />
   <img src="https://img.shields.io/badge/Mochawesome-007ACC?style=for-the-badge" />
   <img src="https://img.shields.io/badge/jira-blue?style=for-the-badge&logo=jira&logoColor=white" />
-  <img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original-wordmark.svg" />
-  <img src="https://github.com/devicons/devicon/blob/master/icons/githubactions/githubactions-original.svg" />
 </p>
 
 | Herramienta        | Propósito                                        |
@@ -106,19 +105,27 @@ npm run open-allure-report
 📌 Allure Report (CI)
 
 ✅ Reporte generado automáticamente por GitHub Actions
+🔗 <a href="https://rulycisnero.github.io/cypress-automationExercise/">Reportes de las features con tags=@Smoke, ignorando las features que no tienen el tag</a>
+🔗 <a href="https://rulycisnero.github.io/cypress-automationExercise/products/">Reporte Epica Products</a>
 
-🔗 Ver reporte de ejemplo
 
 📌 Mochawesome (local)
 Merge: npm run report:merge
 HTML: npm run report:generate
 
-🛠 Integraciones
+### 🛠 Integraciones
 ☁ GitHub Actions
 Cada push activa un workflow de CI que:
 Corre los tests marcados con tags.
 Genera y publica el reporte Allure.
 Comenta automáticamente los issues de Jira con el resultado del test.
+
+🔗 Integración con Jira
+Cada feature contiene un tag @JIRA:AEQ-6 que vincula los tests con historias del proyecto real (AEQ = Automation Exercise QA).
+✔ El script comment-to-jira.js detecta los tags y comenta automáticamente en los tickets asociados.
+🛠 Configurado mediante secretos: JIRA_EMAIL, JIRA_TOKEN, JIRA_BASE_URL.
+
+
 
 📌 Jira Software Cloud
 Se extraen automáticamente los tags del tipo @JIRA:AEQ-7 de los .feature y se publica un comentario con el enlace al reporte Allure.
@@ -143,16 +150,22 @@ Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por
 
 
 ### 🧠 Buenas Prácticas Aplicadas
-Comandos personalizados (commands.ts) para lógica reutilizable
 Estructura modular con Page Object Model
+Comandos personalizados (commands.ts) para lógica reutilizable
 Agrupación de tests por tags (@smoke, @regression, etc.)
 Separación de tests (features/, Ui-Tests/)
 Tipado fuerte con TypeScript
+CI/CD en GitHub Actions + comentarios Jira
 
-### 🔮 Mejoras Futuras
-CI con ambientes paralelos (Matrix)
-Integración con Slack
-Notificaciones por Slack o Email post ejecución
+### 🛠 CI/CD (GitHub Actions)
+Corre tests automáticamente en push/pull request
+
+Filtra por tags (@smoke)
+
+Publica Allure Report en GitHub Pages
+
+Comenta los resultados en tickets de Jira (AEQ-X)
+
 
 ### ✍ Autor
 Desarrollado por Raul Cisnero, con fines educativos y profesionales.
