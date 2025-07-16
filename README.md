@@ -153,8 +153,22 @@ Cada **feature** contiene un tag **@JIRA:AEQ-6** que vincula los tests con histo
 
 Se extraen automáticamente los tags del tipo @JIRA:AEQ-7 de los .feature y se publica un comentario con el enlace al reporte Allure.
 ```bash
-  @JIRA:AEQ-7 @smoke @owner:Ruly @severity:critical
-  Feature: Agregar producto al carrito
+  @JIRA:AEQ-5 @sanity
+  Feature: Product search 
+  Scenario Outline: Search for different products by name
+    Given  I visit the main page -BP
+    When I click on the Products button -BP
+    And I enter "<product>" in the search field
+    And I click on the search button
+    Then I should see the searched product titles
+    Then the products related to "<product>" should be displayed
+ 
+    Examples:
+      | product      |
+      | Polo         |
+      | Blue Top     |
+      | Men Tshirt   |
+      | Winter Top   |
 ```
 🎯 Esto permite rastrear qué test se ejecutó para cada historia de usuario.
 
