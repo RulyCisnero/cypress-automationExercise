@@ -12,12 +12,12 @@ Proyecto de automatización de pruebas funcionales y de API sobre el sitio [http
 
 - [🚀 Tecnologías](#-tecnologías)
 - [⚙ Cómo Ejecutar](#-cómo-ejecutar)
-- [🧪 Comandos de Test](#comandos-de-test)
-- [📄 Reportes](#reportes)
+- [🧪 Comandos de Test](#Comandos-de-Test)
+- [📄 Reportes](#Reportes)
 - [🛠 Integraciones](#Integraciones)
-- [✅ Tests Implementados](#tests-implementados)
-- [👤 Usuarios](#usuarios)
-- [🧠 Buenas Prácticas Aplicadas](#buenas-prácticas-aplicadas)
+- [✅ Tests Implementados](#Tests-implementados)
+- [👤 Usuarios](#Usuarios)
+- [🧠 Buenas Prácticas Aplicadas](#Buenas-prácticas-aplicadas)
 - [🛠 CI/CD (GitHub Actions)](#CI/CD-(GitHub-Actions))
 - [✍ Autor](#Autor)
 
@@ -69,6 +69,8 @@ npm run generate-allure-report
 npm run open-allure-report
 ```
 
+---
+
 ### 🧪 Comandos de Test
 ```bash
 "scripts": {
@@ -99,35 +101,48 @@ npm run open-allure-report
       "clean:all": "npm run clean:allure && npm run clean:cypress"
     }
 ```
+---
 
 ### 📄 Reportes
 
 📌 Allure Report (CI)
 
 ✅ Reporte generado automáticamente por GitHub Actions
+
 🔗 <a href="https://rulycisnero.github.io/cypress-automationExercise/">Reportes de las features con tags=@Smoke, ignorando las features que no tienen el tag</a>
+
 🔗 <a href="https://rulycisnero.github.io/cypress-automationExercise/products/">Reporte Epica Products</a>
 
-
 📌 Mochawesome (local)
+
 Merge: npm run report:merge
+
 HTML: npm run report:generate
+
+---
 
 ### 🛠 Integraciones
 ☁ GitHub Actions
+
 Cada push activa un workflow de CI que:
+
 Corre los tests marcados con tags.
+
 Genera y publica el reporte Allure.
+
 Comenta automáticamente los issues de Jira con el resultado del test.
 
 🔗 Integración con Jira
+
 Cada feature contiene un tag @JIRA:AEQ-6 que vincula los tests con historias del proyecto real (AEQ = Automation Exercise QA).
+
 ✔ El script comment-to-jira.js detecta los tags y comenta automáticamente en los tickets asociados.
+
 🛠 Configurado mediante secretos: JIRA_EMAIL, JIRA_TOKEN, JIRA_BASE_URL.
 
 
-
 📌 Jira Software Cloud
+
 Se extraen automáticamente los tags del tipo @JIRA:AEQ-7 de los .feature y se publica un comentario con el enlace al reporte Allure.
 ```bash
   @JIRA:AEQ-7 @smoke @owner:Ruly @severity:critical
@@ -135,27 +150,44 @@ Se extraen automáticamente los tags del tipo @JIRA:AEQ-7 de los .feature y se p
 ```
 🎯 Esto permite rastrear qué test se ejecutó para cada historia de usuario.
 
-✅ Tests Implementados
+---
+
+### ✅ Tests Implementados
 Registro de usuario (formulario + validación API)
+
 Login con credenciales válidas e inválidas
+
 Eliminación de usuario desde la UI y desde la API
+
 Navegación en productos y categorías
+
 Agregar productos al carrito
+
 Checkout y validación final
+
 Validaciones cruzadas: respuesta API + visibilidad DOM
 
+---
 
-👤 Usuarios
+### 👤 Usuarios
 Los usuarios se mockean desde fixtures/user.json o se pasan como parámetros por configuración.
 
+---
 
 ### 🧠 Buenas Prácticas Aplicadas
 Estructura modular con Page Object Model
+
 Comandos personalizados (commands.ts) para lógica reutilizable
+
 Agrupación de tests por tags (@smoke, @regression, etc.)
+
 Separación de tests (features/, Ui-Tests/)
+
 Tipado fuerte con TypeScript
+
 CI/CD en GitHub Actions + comentarios Jira
+
+---
 
 ### 🛠 CI/CD (GitHub Actions)
 Corre tests automáticamente en push/pull request
@@ -166,8 +198,27 @@ Publica Allure Report en GitHub Pages
 
 Comenta los resultados en tickets de Jira (AEQ-X)
 
+```bash
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run smoke tests
+        run: npm run test:smoke
+      - name: Generate Allure Report
+        run: npm run generate-allure-report
+      - name: Comment to Jira
+        run: node .github/scripts/comment-to-jira.js
+```
+---
 
 ### ✍ Autor
 Desarrollado por Raul Cisnero, con fines educativos y profesionales.
 📫 raulecisnero@gmail.com
-🔗 LinkedIn
+🔗<a href="https://www.linkedin.com/in/ra%C3%BAl-cisnero/">Linkedin</a>
