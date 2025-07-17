@@ -1,7 +1,6 @@
 import { HomePage } from "../../support/HomePage/HomePage";
 import { LoginPage } from "../../support/LoginPage/LoginPage";
 import { NavbarPage } from "../../support/navbar/navbar";
-import {allure} from "allure-commandline";
 
 const homePage = new HomePage();
 const loginPage = new LoginPage();
@@ -17,9 +16,6 @@ describe('Authentication Suite', () => {
     })
 
     it("Register User", () => {
-        allure.label('Register User');
-        allure.label('Owner', 'QA');
-        allure.description('Register a new user and verify account creation');
         navbarPage.clickSignupLoginPage();
         cy.deleteUserIfExists();//verifica si existe el usuario y lo elimina por API
         cy.fillUserForm();
