@@ -8,6 +8,7 @@ const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 
 export default defineConfig({
+  projectId: 'xo3wtp',
   env: {
     TAGS: "not @ignore",
     stepDefinitions: "cypress/e2e/features/steps/*.ts",
