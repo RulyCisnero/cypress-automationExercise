@@ -13,7 +13,9 @@ if (!epicArg) {
 }
 
 const FEATURES_DIR = `cypress/e2e/features/${epicArg}`;
-const RESULTS_URL = `https://rulycisnero.github.io/cypress-automationExercise/${epicArg}/`;
+const runId = process.env.GITHUB_RUN_ID;
+const allureReportUrl = `https://rulycisnero.github.io/cypress-automationExercise/${epicArg}/history/${runId}/index.html`;
+//const RESULTS_URL = `https://rulycisnero.github.io/cypress-automationExercise/${epicArg}/`;
 
 function collectJiraKeys(dir) {
   const keys = new Set();
@@ -74,7 +76,7 @@ function addComment(issueKey, bodyObj) {
             {
               text:
                 `✅ Tests automatizados ejecutados (${epicArg})\n\n` +
-                `📊 Reporte Allure: ${RESULTS_URL}\n` +
+                `📊 Reporte Allure: ${allureReportUrl}\n` +
                 `🔁 Ejecución: GitHub Actions (#${process.env.GITHUB_RUN_NUMBER})\n\n` +
                 `_Comentario generado automáticamente por el pipeline de QA._`,
               type: "text",

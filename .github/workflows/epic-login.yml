@@ -84,4 +84,5 @@ jobs:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
         run: node .github/scripts/comment-to-jira.js login
