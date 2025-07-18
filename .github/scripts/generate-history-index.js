@@ -12,6 +12,7 @@ const runDir = path.join(historyDir, runId);
 if (!fs.existsSync(historyDir)) {
   fs.mkdirSync(historyDir, { recursive: true });
   console.log(`🟡 Directorio 'allure-history' no existía. Se creó.`);
+  console.log(`📁 ${historyDir}`);
 }
 
 // 2. Copiar el contenido de allure-report a allure-history/<runId>
