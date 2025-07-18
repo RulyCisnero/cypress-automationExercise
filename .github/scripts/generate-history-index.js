@@ -25,7 +25,8 @@ fs.mkdirSync(runDir, { recursive: true });
 fs.readdirSync(sourceReportDir).forEach((file) => {
   const src = path.join(sourceReportDir, file);
   const dest = path.join(runDir, file);
-  fs.copyFileSync(src, dest);
+  fs.cpSync(src, dest, { recursive: true });
+  //fs.copyFileSync(src, dest);
 });
 console.log(`✅ Reporte copiado a ${runDir}`);
 
