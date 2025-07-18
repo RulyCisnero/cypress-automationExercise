@@ -5,6 +5,27 @@ const path = require("path");
 const historyDir = path.join(__dirname, "allure-history");
 const indexPath = path.join(historyDir, "index.html");
 
+// Si no existe el directorio, lo creamos vacío y salimos
+if (!fs.existsSync(historyDir)) {
+  fs.mkdirSync(historyDir, { recursive: true });
+  fs.writeFileSync(indexPath, `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Allure Report History</title>
+    </head>
+    <body>
+      <h1>Historial vacío</h1>
+      <p>No hay reportes generados aún.</p>
+    </body>
+    </html>
+  `);
+  console.log("🟡 Directorio 'allure-history' no existía. Se creó vacío con index.html.");
+  process.exit(0);
+}
+
+// Escaneamos los subdirectorios dentro de allure-history
 const folders = fs.readdirSync(historyDir).filter((file) => {
   return fs.statSync(path.join(historyDir, file)).isDirectory();
 });
