@@ -9,6 +9,13 @@ const fs = require('fs');
 
 export default defineConfig({
   projectId: 'xo3wtp',
+  pageLoadTimeout: 20000, // ✅ Espera hasta 20 segundos a que cargue la página
+  viewportWidth: 1920,    // ✅ Resolución estándar de escritorio (FullHD)
+  viewportHeight: 1080,
+  retries: process.env.CI ? 2 : 0, // ✅ Reintenta los tests solo en CI
+	screenshotsFolder: 'cypress/screenshots',  // ✅ Carpeta personalizada para guardar screenshots
+	screenshotOnRunFailure: true,  // ✅ Toma screenshot solo si el test falla
+
   env: {
     TAGS: 'not @ignore',
     stepDefinitions: 'cypress/e2e/features/steps/*.ts',
