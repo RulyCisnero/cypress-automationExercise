@@ -26,8 +26,11 @@ jobs:
       - name: 🧷 Generate Allure Report
         run: npm run generate-allure-report
 
-      - name: 🚀 Deploy Allure Report to GitHub Pages
+     # 🌐 9. Publicar el reporte Allure en GitHub Pages con historial por fecha
+      - name: Deploy Allure Report to GitHub Pages (TestAll with Date)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
+          destination_dir: TestAll/history/${{ github.run_id }}
+          ##ojo aca donde se define el destino del reporte, se puede cambiar a Epica/history si es necesario  
