@@ -1,61 +1,59 @@
-// generate-history-index.js
+// .github/scripts/generate-history-index.js
+
 const fs = require("fs");
 const path = require("path");
 
-const historyDir = path.join(__dirname, "allure-history");
-const indexPath = path.join(historyDir, "index.html");
+const historyDir = path.resolve("allure-history");
+const sourceReportDir = path.resolve("allure-report");
+const runId = process.env.GITHUB_RUN_ID || `run-${Date.now()}`;
+const runDir = path.join(historyDir, runId);
 
-// Si no existe el directorio, lo creamos vacío y salimos
+// 1. Crear la carpeta allure-history si no existe
 if (!fs.existsSync(historyDir)) {
   fs.mkdirSync(historyDir, { recursive: true });
-  fs.writeFileSync(indexPath, `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <title>Allure Report History</title>
-    </head>
-    <body>
-      <h1>Historial vacío</h1>
-      <p>No hay reportes generados aún.</p>
-    </body>
-    </html>
-  `);
-  console.log("🟡 Directorio 'allure-history' no existía. Se creó vacío con index.html.");
-  process.exit(0);
+  console.log(`🟡 Directorio 'allure-history' no existía. Se creó.`);
 }
 
-// Escaneamos los subdirectorios dentro de allure-history
-const folders = fs.readdirSync(historyDir).filter((file) => {
-  return fs.statSync(path.join(historyDir, file)).isDirectory();
+// 2. Copiar el contenido de allure-report a allure-history/<runId>
+if (!fs.existsSync(sourceReportDir)) {
+  console.error("❌ La carpeta 'allure-report' no existe. Abortando.");
+  process.exit(1);
+}
+fs.mkdirSync(runDir, { recursive: true });
+
+fs.readdirSync(sourceReportDir).forEach((file) => {
+  const src = path.join(sourceReportDir, file);
+  const dest = path.join(runDir, file);
+  fs.copyFileSync(src, dest);
 });
+console.log(`✅ Reporte copiado a ${runDir}`);
 
-folders.sort().reverse(); // más reciente primero
+// 3. Leer todos los subdirectorios dentro de allure-history y generar índice
+const dirs = fs.readdirSync(historyDir).filter((f) =>
+  fs.statSync(path.join(historyDir, f)).isDirectory()
+);
 
-const htmlContent = `
+// Crear índice simple con links
+const indexHtml = `
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Allure Report History</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    h1 { color: #333; }
-    li { margin: 0.5rem 0; }
-  </style>
+  <meta charset="UTF-8">
+  <title>Historial de Reportes</title>
 </head>
 <body>
-  <h1>Historial de Reports Allure</h1>
+  <h1>Historial de Reportes</h1>
   <ul>
-    ${folders
-      .map((folder) => {
-        return `<li><a href="./${folder}/index.html">📅 ${folder}</a></li>`;
-      })
+    ${dirs
+      .map(
+        (d) =>
+          `<li><a href="./${d}/index.html" target="_blank">${d}</a></li>`
+      )
       .join("\n")}
   </ul>
 </body>
 </html>
 `;
 
-fs.writeFileSync(indexPath, htmlContent);
-console.log("✔️ Allure history index generado correctamente.");
+fs.writeFileSync(path.join(historyDir, "index.html"), indexHtml);
+console.log(`📄 Índice generado en allure-history/index.html`);
