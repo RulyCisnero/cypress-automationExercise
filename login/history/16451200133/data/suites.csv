@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","2453","Login with missing email","","Tue Jul 22 17:24:02 UTC 2025","passed","Tue Jul 22 17:24:05 UTC 2025","","User Login Scenarios","",""
-"","2837","Login with invalid credentials","","Tue Jul 22 17:23:59 UTC 2025","passed","Tue Jul 22 17:24:02 UTC 2025","","User Login Scenarios","",""
-"","4587","User logs in with valid credentials","","Tue Jul 22 17:23:55 UTC 2025","passed","Tue Jul 22 17:23:59 UTC 2025","","User Login Scenarios","",""
