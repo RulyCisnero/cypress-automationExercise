@@ -1,35 +1,35 @@
 name: 🧪 Epic - Login Tests
 
 on:
-  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub Actions
+  workflow_dispatch:
 
 jobs:
-  run-products-tests:
+  run-login-tests:
     runs-on: ubuntu-latest
 
     steps:
-      # 🧾 1. Descargar el repositorio
-      - name: Checkout repo
+      # 🧾 1. Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 🟦 2. Configurar Node.js
+      # 🟦 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 📦 3. Instalar dependencias
+      # 📦 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 🧪 4. Ejecutar los tests de Cypress con Cucumber y Allure habilitado
-      - name: Run Products Tests
+      # 🧪 4. Run Cypress Login Tests
+      - name: Run Login Tests
         run: |
           npx cypress run \
             --env allure=true \
             --config specPattern='cypress/e2e/features/login/*.feature'
 
-      # 📼 5. Subir videos y capturas de pantalla como artifacts (para debugging)
+      # 📼 5. Upload Cypress artifacts
       - name: Upload Cypress Videos
         uses: actions/upload-artifact@v4
         with:
@@ -42,35 +42,34 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      # 📊 6. Instalar Allure CLI
+      # 📊 6. Allure CLI
       - name: Install Allure CLI
         run: npm install -g allure-commandline
 
-      # 📈 7. Generar reporte Allure (se espera que npm run generate-allure-report esté definido)
+      # 📈 7. Generate Allure Report
       - name: Generate Allure Report
         run: npm run generate-allure-report
 
-      # 🧾 7.5 Generar índice de historial Allure
-      - name: Generate Allure History Index
-        run: node .github/scripts/generate-history-index.js #aca deberia ir login como parametro?
+      # 📘 7.5 Generate Index for Allure History
+      # - name: Generate Allure History Index
+      #  run: node .github/scripts/generate-history-index.js login
 
-      # 🗃 8. Subir el reporte Allure como artifact simple (descargable desde el workflow)
+      # 🗃 8. Upload report as artifact
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-Login
           path: allure-report
 
-      # 🌐 9. Publicar el reporte Allure en GitHub Pages con historial por fecha
-      - name: Deploy Allure Report to GitHub Pages (Login with Date)
+      # 🌐 9. Deploy report to GitHub Pages
+      - name: Deploy Allure Report (with history path)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
           destination_dir: login/history/${{ github.run_id }}
-          ##ojo aca donde se define el destino del reporte, se puede cambiar a Epica/history si es necesario  
 
-     # 🌐 9.5 Publicar historial general con índice
+      # 🌐 9.5 Deploy updated index.html to login/
       - name: Deploy Allure History Index
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -78,7 +77,7 @@ jobs:
           publish_dir: ./allure-history
           destination_dir: login
 
-      # 🧷 10. Comentar automáticamente en los tickets de Jira
+      # 🧷 10. Comment in Jira
       - name: Add Comment to Jira Tickets
         env:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
