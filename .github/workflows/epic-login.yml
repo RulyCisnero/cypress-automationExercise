@@ -20,11 +20,15 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🚀 Run Login Tests (Cypress)
+       # 🧪 4. Ejecutar los tests de Cypress con Cucumber y Allure habilitado
+      - name: Run Login Tests
         env:
           CYPRESS_ALLURE: true
-        run: npm run test:login
-        continue-on-error: true
+        run: |
+          npx cypress run \
+            --env allure=true \
+            --config specPattern='cypress/e2e/features/login/*.feature'
+        continue-on-error: true  
 
       - name: ⬇️ Clone gh-pages branch
         run: |
@@ -57,7 +61,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages
           publish_branch: gh-pages
-          
+
       # 🧷 10. Comment in Jira
       - name: Add Comment to Jira Tickets
         env:
