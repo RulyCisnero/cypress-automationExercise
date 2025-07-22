@@ -24,32 +24,29 @@ jobs:
         env:
           CYPRESS_ALLURE: true
         run: npm run test:smoke
-        continue-on-error: true  # 👉 Evita que el job falle si hay tests fallidos
-
-      - name: 🔍 Debug allure-results
-        run: ls -R allure-results || echo "⚠️ No se generó nada en allure-results"
+        continue-on-error: true
 
       - name: 🛠 Generate Allure Report
         run: npm run generate-allure-report
 
-      - name: 📤 Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report-smoke
-          path: allure-report
-
-      - name: 📁 Organize Allure Report for GitHub Pages
+      - name: ⬇️ Clone gh-pages branch
         run: |
-          RUN_ID=$(date +'%Y-%m-%d_%H-%M')
-          mkdir -p gh-pages/ci-smoke/"$RUN_ID"
-          mkdir -p gh-pages/ci-smoke/latest
-          cp -r allure-report/* gh-pages/ci-smoke/"$RUN_ID"
-          cp -r allure-report/* gh-pages/ci-smoke/latest
-        shell: bash
+          git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      - name: 🌐 Deploy Allure Report to GitHub Pages
-        if: github.ref == 'refs/heads/main'
+      - name: 🕒 Set current date and time for folder
+        id: datetime
+        run: echo "run_id=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
+
+      - name: 🗂️ Organize Allure Report into Smoke structure
+        run: |
+          mkdir -p gh-pages/Smoke/history/${{ steps.datetime.outputs.run_id }}
+          mkdir -p gh-pages/Smoke/latest
+          cp -r allure-report/* gh-pages/Smoke/history/${{ steps.datetime.outputs.run_id }}/
+          cp -r allure-report/* gh-pages/Smoke/latest/
+
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          publish_dir: ./gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages

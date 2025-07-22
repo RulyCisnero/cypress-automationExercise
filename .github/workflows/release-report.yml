@@ -22,47 +22,29 @@ jobs:
 
       - name: 🧪 Run ALL tests (UI + Features)
         run: npm run test:all
-        continue-on-error: true  # 👉 Evita que el job falle si hay tests fallidos
+        continue-on-error: true
 
       - name: 🧷 Generate Allure Report
         run: npm run generate-allure-report
 
-      - name: Set current date for folder name
-        run: echo "RUN_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      - name: ⬇️ Clone gh-pages branch
+        run: |
+          git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      - name: 🕒 Set RUN_DATE output
+      - name: 🕒 Set current date for folder name
         id: date
         run: echo "run_date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
-  
-      - name: 🌐 Deploy Allure Report to GitHub Pages (TestAll/history/YYYY-MM-DD)
-        env:
-          RUN_DATE: ${{ steps.date.outputs.run_date }}
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./allure-report
-          destination_dir: TestAll/history/${{ env.RUN_DATE }}
-          ##https://rulycisnero.github.io/cypress-automationExercise/TestAll/history/2025-07-22/#
-          ##https://rulycisnero.github.io/cypress-automationExercise/TestAll/history/2025-07-22/index.html
 
-
-      - name: 🌐 Deploy Allure Report to GitHub Pages (TestAll/latest)
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./allure-report
-          destination_dir: TestAll/latest
-
-      - name: 🔗 Generate link to Allure Report
+      - name: 🗂️ Organize Allure Report into TestAll structure
         run: |
-          echo "## 📊 Allure Report Link" > report-link.md
-          echo "" >> report-link.md
-          echo "[🔎 Ver último reporte](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/TestAll/latest/)" >> report-link.md
+          mkdir -p gh-pages/TestAll/history/${{ steps.date.outputs.run_date }}
+          mkdir -p gh-pages/TestAll/latest
+          cp -r allure-report/* gh-pages/TestAll/history/${{ steps.date.outputs.run_date }}/
+          cp -r allure-report/* gh-pages/TestAll/latest/
 
-      - name: 📎 Adjuntar link al resumen del workflow
-        uses: actions/upload-artifact@v4
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: Allure Report Link
-          path: report-link.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
