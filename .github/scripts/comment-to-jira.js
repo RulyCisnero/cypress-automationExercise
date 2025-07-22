@@ -15,7 +15,7 @@ if (!epicArg) {
 const FEATURES_DIR = `cypress/e2e/features/${epicArg}`;
 const runId = process.env.GITHUB_RUN_ID;
 const allureReportUrl = `https://rulycisnero.github.io/cypress-automationExercise/${epicArg}/history/${runId}/index.html`;
-//const RESULTS_URL = `https://rulycisnero.github.io/cypress-automationExercise/${epicArg}/`;
+
 //const runId = process.env.GITHUB_RUN_ID || `run-${Date.now()}`;
 
 // Función para convertir runId a fecha

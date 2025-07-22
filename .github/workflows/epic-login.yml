@@ -5,78 +5,59 @@ on:
 
 jobs:
   run-login-tests:
+    name: 🔐 Login Tests
     runs-on: ubuntu-latest
 
     steps:
-      # 🧾 1. Checkout
-      - name: Checkout repository
+      - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
-      # 🟦 2. Setup Node.js
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 📦 3. Install dependencies
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci
 
-      # 🧪 4. Run Cypress Login Tests
-      - name: Run Login Tests
+      - name: 🚀 Run Login Tests (Cypress)
+        env:
+          CYPRESS_ALLURE: true
+        run: npm run test:login
+        continue-on-error: true
+
+      - name: ⬇️ Clone gh-pages branch
         run: |
-          npx cypress run \
-            --env allure=true \
-            --config specPattern='cypress/e2e/features/login/*.feature'
+          git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      # 📼 5. Upload Cypress artifacts
-      - name: Upload Cypress Videos
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
+      - name: 🕒 Set current datetime for folder
+        id: datetime
+        run: echo "run_id=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
 
-      - name: Upload Cypress Screenshots
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+      - name: ♻️ Restore trend data (history) if available
+        run: |
+          if [ -d "gh-pages/login/latest/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/login/latest/history/* allure-results/history/
+          fi
 
-      # 📊 6. Allure CLI
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
-
-      # 📈 7. Generate Allure Report
-      - name: Generate Allure Report
+      - name: 🛠 Generate Allure Report
         run: npm run generate-allure-report
 
-      # 📘 7.5 Generate Index for Allure History
-      # - name: Generate Allure History Index
-      #  run: node .github/scripts/generate-history-index.js login
+      - name: 🗂️ Organize Allure Report into login structure
+        run: |
+          mkdir -p gh-pages/login/history/${{ steps.datetime.outputs.run_id }}
+          mkdir -p gh-pages/login/latest
+          cp -r allure-report/* gh-pages/login/history/${{ steps.datetime.outputs.run_id }}/
+          cp -r allure-report/* gh-pages/login/latest/
 
-      # 🗃 8. Upload report as artifact
-      - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report-Login
-          path: allure-report
-
-      # 🌐 9. Deploy report to GitHub Pages
-      - name: Deploy Allure Report (with history path)
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
-          destination_dir: login/history/${{ github.run_id }}
-
-      # 🌐 9.5 Deploy updated index.html to login/
-      - name: Deploy Allure History Index
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-history
-          destination_dir: login
-
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
+          
       # 🧷 10. Comment in Jira
       - name: Add Comment to Jira Tickets
         env:
