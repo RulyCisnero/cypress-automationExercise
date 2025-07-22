@@ -26,16 +26,23 @@ jobs:
         run: npm run test:smoke
         continue-on-error: true
 
-      - name: 🛠 Generate Allure Report
-        run: npm run generate-allure-report
-
       - name: ⬇️ Clone gh-pages branch
         run: |
           git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      - name: 🕒 Set current date and time for folder
+      - name: 🕒 Set current datetime for folder
         id: datetime
         run: echo "run_id=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
+
+      - name: ♻️ Restore trend data (history) if available
+        run: |
+          if [ -d "gh-pages/Smoke/latest/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/Smoke/latest/history/* allure-results/history/
+          fi
+
+      - name: 🛠 Generate Allure Report
+        run: npm run generate-allure-report
 
       - name: 🗂️ Organize Allure Report into Smoke structure
         run: |
