@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const historyDir = path.resolve("allure-history");
+const historyDir = path.resolve("history");
 const sourceReportDir = path.resolve("allure-report");
 const runId = process.env.GITHUB_RUN_ID || `run-${Date.now()}`;
 const runDir = path.join(historyDir, runId);
