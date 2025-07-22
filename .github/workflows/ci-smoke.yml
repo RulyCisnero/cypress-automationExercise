@@ -1,4 +1,4 @@
-name: Cypress Tests CI
+name: 🧪 Cypress Tests CI
 
 on:
   workflow_dispatch:

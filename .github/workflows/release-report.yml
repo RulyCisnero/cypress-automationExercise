@@ -1,7 +1,7 @@
 name: 🚀 Release Allure Report
 
 on:
-  workflow_dispatch:  # Solo se ejecuta manualmente desde GitHub Actions
+  workflow_dispatch:
 
 jobs:
   run-full-suite:
@@ -22,15 +22,45 @@ jobs:
 
       - name: 🧪 Run ALL tests (UI + Features)
         run: npm run test:all
+        continue-on-error: true  # 👉 Evita que el job falle si hay tests fallidos
 
       - name: 🧷 Generate Allure Report
         run: npm run generate-allure-report
 
-     # 🌐 9. Publicar el reporte Allure en GitHub Pages con historial por fecha
-      - name: Deploy Allure Report to GitHub Pages (TestAll with Date)
+      - name: Set current date for folder name
+        run: echo "RUN_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: 🕒 Set RUN_DATE output
+        id: date
+        run: echo "run_date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
+  
+      - name: 🌐 Deploy Allure Report to GitHub Pages (TestAll/history/YYYY-MM-DD)
+        env:
+          RUN_DATE: ${{ steps.date.outputs.run_date }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./allure-report
-          destination_dir: TestAll/history/${{ github.run_id }}
-          ##ojo aca donde se define el destino del reporte, se puede cambiar a Epica/history si es necesario  
+          destination_dir: TestAll/history/${{ env.RUN_DATE }}
+
+
+      - name: 🌐 Deploy Allure Report to GitHub Pages (TestAll/latest)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./allure-report
+          destination_dir: TestAll/latest
+
+      - name: 🔗 Generate link to Allure Report
+        run: |
+          echo "## 📊 Allure Report Link" > report-link.md
+          echo "" >> report-link.md
+          echo "[🔎 Ver último reporte](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/TestAll/latest/)" >> report-link.md
+
+      - name: 📎 Adjuntar link al resumen del workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: Allure Report Link
+          path: report-link.md
