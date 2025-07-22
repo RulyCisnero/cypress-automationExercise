@@ -43,6 +43,8 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./allure-report
           destination_dir: TestAll/history/${{ env.RUN_DATE }}
+          ##https://rulycisnero.github.io/cypress-automationExercise/TestAll/history/2025-07-22/#
+          ##https://rulycisnero.github.io/cypress-automationExercise/TestAll/history/2025-07-22/index.html
 
 
       - name: 🌐 Deploy Allure Report to GitHub Pages (TestAll/latest)
