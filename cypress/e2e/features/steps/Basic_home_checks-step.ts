@@ -16,8 +16,8 @@ Given('I visit the homepage', () => {
 });
 
 Then('I should see the main banner', () => {
-    homePage.verifyMainBannerVisible(); // verifica banner principal
-    //homePage.verifyBannerPagina(); // verifica banner de la pag
+    //homePage.verifyMainBannerVisible(); // error generado para verificar historial de reporte
+    homePage.verifyBannerPagina(); // verifica banner de la pag
 });
 
 
