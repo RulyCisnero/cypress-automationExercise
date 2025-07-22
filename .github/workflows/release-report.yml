@@ -1,11 +1,11 @@
-name: 🚀 Release Allure Report
+name: 🚀 Release Allure Report - TestAll
 
 on:
   workflow_dispatch:
 
 jobs:
   run-full-suite:
-    name: Run all critical tests
+    name: Run ALL critical tests
     runs-on: ubuntu-latest
 
     steps:
@@ -31,16 +31,24 @@ jobs:
         run: |
           git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      - name: 🕒 Set current date for folder name
-        id: date
-        run: echo "run_date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
+      - name: 🕒 Set current date & time for folder name
+        id: datetime
+        run: echo "run_date=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
 
-      - name: 🗂️ Organize Allure Report into TestAll structure
+      - name: 📁 Create folders for TestAll report
         run: |
-          mkdir -p gh-pages/TestAll/history/${{ steps.date.outputs.run_date }}
-          mkdir -p gh-pages/TestAll/latest
-          cp -r allure-report/* gh-pages/TestAll/history/${{ steps.date.outputs.run_date }}/
-          cp -r allure-report/* gh-pages/TestAll/latest/
+          mkdir -p gh-pages/testAll/history
+          mkdir -p gh-pages/testAll/${{ steps.datetime.outputs.run_date }}
+          mkdir -p gh-pages/testAll/latest
+
+      - name: 📄 Copy Allure Report to correct folders
+        run: |
+          cp -r allure-report/* gh-pages/testAll/${{ steps.datetime.outputs.run_date }}/
+          cp -r allure-report/* gh-pages/testAll/latest/
+
+      - name: 🧠 Generate history.json index for TestAll
+        run: |
+          node .github/scripts/generate-history-index.js testAll
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
