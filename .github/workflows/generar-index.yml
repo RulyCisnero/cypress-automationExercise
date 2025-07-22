@@ -1,0 +1,30 @@
+# Este workflow genera el index html para el historial de Allure
+# Este workflow se ejecuta manualmente para actualizar el índice de Allure con los últimos resultados
+# Ejecuta el script generate-index.js que actualiza el archivo gh-pages/index.html
+name: 🧭 Generate Allure Report Index
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run index generator
+        run: node .github/scripts/generate-index.js
+
+      - name: Commit and push updated index.html
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
+          git add gh-pages/index.html
+          git commit -m "Update index with latest test runs [skip ci]" || echo "No changes to commit"
+          git push
