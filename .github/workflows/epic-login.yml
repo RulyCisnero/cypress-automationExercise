@@ -52,7 +52,7 @@ jobs:
 
       # 🧾 7.5 Generar índice de historial Allure
       - name: Generate Allure History Index
-        run: node .github/scripts/generate-history-index.js
+        run: node .github/scripts/generate-history-index.js #aca deberia ir login como parametro?
 
       # 🗃 8. Subir el reporte Allure como artifact simple (descargable desde el workflow)
       - name: Upload Allure Report as Artifact

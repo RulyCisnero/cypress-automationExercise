@@ -83,4 +83,4 @@ jobs:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-        run: node .github/scripts/comment-to-jira.js
+        run: node .github/scripts/comment-to-jira.js products
