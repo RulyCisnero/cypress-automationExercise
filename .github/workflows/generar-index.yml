@@ -28,12 +28,12 @@ jobs:
       - name: 🧠 Run index generator
         run: node .github/scripts/generate-history-index.js
 
-      - name: Commit y push del nuevo índice
+      #git add ./**/*.html   #👈 Esto incluye TODOS los index.html
+      - name: Commit y Push del nuevo índice
         run: |
           cd gh-pages
           git config user.name 'github-actions'
           git config user.email 'actions@github.com'
-          git add index.html
+          git add ./**/*.html   
           git commit -m "Update index with latest test runs [skip ci]" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push origin gh-pages
