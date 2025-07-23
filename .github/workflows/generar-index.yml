@@ -34,7 +34,7 @@ jobs:
           cd gh-pages
           git config user.name 'github-actions'
           git config user.email 'actions@github.com'
-          git add ./**/*.html
+          git add -A
           git commit -m "Update index with latest test runs [skip ci]" || echo "No changes to commit"
           
       - name: Set remote with token
