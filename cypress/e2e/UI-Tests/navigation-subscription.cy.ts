@@ -30,7 +30,7 @@ describe('Navigation and Subscription Suite', () => {
 
     it('Verify Subscription in Cart page', () => {
         navbarPage.clickCartPage(); 
-        footerPage.scrollToFotter(); 
+        //footerPage.scrollToFotter(); 
         footerPage.verifySubscriptionText();
         cy.subscribeWithEmail();
         footerPage.verifySubscriptionSuccessMessage();
