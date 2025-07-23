@@ -19,7 +19,7 @@ jobs:
           node-version: '20'
 
       - name: Run index generator
-        run: node .github/scripts/generate-index.js
+        run: node .github/scripts/generatehistory-index.js
 
       - name: Commit and push updated index.html
         run: |
