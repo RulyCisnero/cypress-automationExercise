@@ -90,10 +90,26 @@ const htmlContenido = `<!DOCTYPE html>
 </head>
 <body>
   <h1>📁 Índice General de Reportes</h1>
+  <p>
+    Bienvenido al índice general de reportes Allure generados por los distintos tipos de pruebas automatizadas.
+    Aquí encontrarás carpetas con los resultados históricos de cada suite de tests:
+  </p>
   <ul>
+    <li><strong>TestAll:</strong> Reportes completos que incluyen todas las pruebas críticas ejecutadas.</li>
+    <li><strong>Smoke:</strong> Reportes de pruebas de humo para verificar funcionalidades básicas.</li>
+    <li><strong>Login:</strong> Reportes específicos de pruebas relacionadas al módulo de inicio de sesión.</li>
+  </ul>
+  <p>
+    Haciendo clic en cada carpeta podrás acceder a un índice con las ejecuciones históricas, ordenadas por fecha y hora.
+    Desde allí, podrás navegar a cada reporte individual para revisar resultados detallados.
+  </p>
+
+  <ul>
+    <!-- Aquí va la lista con los links a cada carpeta -->
     ${linksIndex.join("\n")}
   </ul>
 </body>
+
 </html>`;
 
 const outputPath = path.join(BASE_DIR, "index.html");
