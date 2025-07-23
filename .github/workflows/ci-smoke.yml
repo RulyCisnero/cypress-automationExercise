@@ -9,31 +9,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. clonar el repositorio
       - name: 📥 Checkout repo
         uses: actions/checkout@v4
 
+      # 2. configurar Node.js  
       - name: ⚙️ Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3. instalar dependencias
       - name: 📦 Install dependencies
         run: npm ci
 
+      # 🧪 4. Ejecutar los tests de Cypress con Cucumber y Allure habilitado  
       - name: 🚀 Run Smoke Tests (Cypress)
         env:
           CYPRESS_ALLURE: true
         run: npm run test:smoke
         continue-on-error: true
 
+      # 5. Clonar la rama gh-pages para almacenar el reporte 
       - name: ⬇️ Clone gh-pages branch
         run: |
           git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
+      # 6. Configurar la fecha y hora actual para el nombre de la carpeta    
       - name: 🕒 Set current datetime for folder
         id: datetime
         run: echo "run_id=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
 
+      # 7. Restaurar datos de tendencia (historial) si están disponibles
       - name: ♻️ Restore trend data (history) if available
         run: |
           if [ -d "gh-pages/Smoke/latest/history" ]; then
@@ -41,9 +48,11 @@ jobs:
             cp -r gh-pages/Smoke/latest/history/* allure-results/history/
           fi
 
+      # 8. Generar el reporte Allure    
       - name: 🛠 Generate Allure Report
         run: npm run generate-allure-report
 
+      # 9. Organizar el reporte Allure en la estructura de Smoke  
       - name: 🗂️ Organize Allure Report into Smoke structure
         run: |
           mkdir -p gh-pages/Smoke/history/${{ steps.datetime.outputs.run_id }}
@@ -51,6 +60,7 @@ jobs:
           cp -r allure-report/* gh-pages/Smoke/history/${{ steps.datetime.outputs.run_id }}/
           cp -r allure-report/* gh-pages/Smoke/latest/
 
+      # 10. Desplegar el reporte en GitHub Pages    
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

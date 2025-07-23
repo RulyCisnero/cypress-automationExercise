@@ -9,47 +9,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout del código
       - name: 🧾 Checkout code
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: 🛠 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # 3. Instalar dependencias
       - name: 📦 Install dependencies
         run: npm ci
 
+      # 4. Ejecutar todos los tests (UI + Features)
       - name: 🧪 Run ALL tests (UI + Features)
         run: npm run test:all
         continue-on-error: true
 
-      - name: 🧷 Generate Allure Report
-        run: npm run generate-allure-report
-
+      # 5. Clonar gh-pages para preparar los reportes
       - name: ⬇️ Clone gh-pages branch
         run: |
           git clone --branch gh-pages --depth 1 https://github.com/${{ github.repository }} gh-pages
 
-      - name: 🕒 Set current date & time for folder name
+      # 6. Setear fecha y hora actual para nombrar carpeta
+      - name: 🕒 Set current datetime for folder
         id: datetime
-        run: echo "run_date=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
+        run: echo "run_id=$(date +'%Y-%m-%d_%H-%M')" >> "$GITHUB_OUTPUT"
 
-      - name: 📁 Create folders for TestAll report
+      # 7. Restaurar historial si existe
+      - name: ♻️ Restore trend data (history) if available
         run: |
-          mkdir -p gh-pages/testAll/history
-          mkdir -p gh-pages/testAll/${{ steps.datetime.outputs.run_date }}
-          mkdir -p gh-pages/testAll/latest
+          if [ -d "gh-pages/TestAll/latest/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/TestAll/latest/history/* allure-results/history/
+          fi
 
-      - name: 📄 Copy Allure Report to correct folders
+      # 8. Generar el reporte Allure
+      - name: 🧷 Generate Allure Report
+        run: npm run generate-allure-report
+
+      # 9. Organizar el reporte en la estructura de TestAll
+      - name: 📁 Organize Allure Report into TestAll structure
         run: |
-          cp -r allure-report/* gh-pages/testAll/${{ steps.datetime.outputs.run_date }}/
-          cp -r allure-report/* gh-pages/testAll/latest/
+          mkdir -p gh-pages/TestAll/history/${{ steps.datetime.outputs.run_id }}
+          mkdir -p gh-pages/TestAll/latest
+          cp -r allure-report/* gh-pages/TestAll/history/${{ steps.datetime.outputs.run_id }}/
+          cp -r allure-report/* gh-pages/TestAll/latest/
 
-      - name: 🧠 Generate history.json index for TestAll
-        run: |
-          node .github/scripts/generate-history-index.js testAll
-
+      # 10. Desplegar en GitHub Pages
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

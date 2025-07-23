@@ -5,7 +5,7 @@ on:
 
 jobs:
   run-login-tests:
-    name: 🔐 Login Tests
+    name: ✨ Login Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -40,20 +40,20 @@ jobs:
 
       - name: ♻️ Restore trend data (history) if available
         run: |
-          if [ -d "gh-pages/login/latest/history" ]; then
+          if [ -d "gh-pages/Login/latest/history" ]; then
             mkdir -p allure-results/history
-            cp -r gh-pages/login/latest/history/* allure-results/history/
+            cp -r gh-pages/Login/latest/history/* allure-results/history/
           fi
 
       - name: 🛠 Generate Allure Report
         run: npm run generate-allure-report
 
-      - name: 🗂️ Organize Allure Report into login structure
+      - name: 🗂️ Organize Allure Report into Login structure
         run: |
-          mkdir -p gh-pages/login/history/${{ steps.datetime.outputs.run_id }}
-          mkdir -p gh-pages/login/latest
-          cp -r allure-report/* gh-pages/login/history/${{ steps.datetime.outputs.run_id }}/
-          cp -r allure-report/* gh-pages/login/latest/
+          mkdir -p gh-pages/Login/history/${{ steps.datetime.outputs.run_id }}
+          mkdir -p gh-pages/Login/latest
+          cp -r allure-report/* gh-pages/Login/history/${{ steps.datetime.outputs.run_id }}/
+          cp -r allure-report/* gh-pages/Login/latest/
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
