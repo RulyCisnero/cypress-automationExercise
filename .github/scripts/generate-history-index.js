@@ -75,7 +75,7 @@ fs.readdirSync(BASE_DIR).forEach((testType) => {
 });
 
 // Crear index.html general
-const htmlContenido = `<!DOCTYPE html>
+const index = `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
