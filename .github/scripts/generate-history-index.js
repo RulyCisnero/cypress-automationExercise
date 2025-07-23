@@ -113,5 +113,5 @@ const index = `<!DOCTYPE html>
 </html>`;
 
 const outputPath = path.join(BASE_DIR, "index.html");
-fs.writeFileSync(outputPath, htmlContenido);
+fs.writeFileSync(outputPath, index);
 console.log(`✅ Generado índice principal: gh-pages/index.html`);
