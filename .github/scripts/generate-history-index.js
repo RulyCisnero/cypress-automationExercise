@@ -3,48 +3,32 @@
 const fs = require("fs");
 const path = require("path");
 
-const historyDir = path.resolve("history");
-const sourceReportDir = path.resolve("allure-report");
-const runId = process.env.GITHUB_RUN_ID || `run-${Date.now()}`;
-const runDir = path.join(historyDir, runId);
+// Ruta base donde están las carpetas de tipo de test (Smoke, login, etc.)
+const BASE_DIR = path.resolve("gh-pages");
 
-/* // Crear directorio si no existe
-if (!fs.existsSync(historyDir)) {
-  fs.mkdirSync(historyDir, { recursive: true });
-  console.log(`🟡 Directorio 'history' no existía. Se creó.`);
-}
- */
-
-// Copiar el último reporte
-if (!fs.existsSync(sourceReportDir)) {
-  console.error("❌ La carpeta 'allure-report' no existe. Abortando.");
-  process.exit(1);
-}
-fs.mkdirSync(runDir, { recursive: true });
-fs.readdirSync(sourceReportDir).forEach((file) => {
-  const src = path.join(sourceReportDir, file);
-  const dest = path.join(runDir, file);
-  fs.cpSync(src, dest, { recursive: true });
-});
-console.log(`✅ Reporte copiado a ${runDir}`);
-
-// Leer subdirectorios ordenados
-const dirs = fs
-  .readdirSync(historyDir)
-  .filter((f) => fs.statSync(path.join(historyDir, f)).isDirectory())
-  .sort((a, b) => b.localeCompare(a));
-
-// Función para convertir runId a fecha
-function formatRunId(id) {
-  const parts = id.split("-");
-  const timestamp = parts[parts.length - 1];
-  const date = new Date(parseInt(timestamp));
-  if (isNaN(date.getTime())) return id;
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+// Función para formatear fechas desde el nombre del directorio
+function formatRunId(dirName) {
+  const date = new Date(dirName.replace("_", "T").replace(/-/g, ":"));
+  return isNaN(date.getTime()) ? dirName : date.toLocaleString("es-AR");
 }
 
-// HTML index
-const indexHtml = `<!DOCTYPE html>
+// Recorre todas las carpetas dentro de gh-pages/
+fs.readdirSync(BASE_DIR).forEach((testType) => {
+  const testPath = path.join(BASE_DIR, testType);
+  const historyPath = path.join(testPath, "history");
+
+  if (!fs.existsSync(historyPath) || !fs.statSync(historyPath).isDirectory()) return;
+
+  const runs = fs
+    .readdirSync(historyPath)
+    .filter((name) => fs.statSync(path.join(historyPath, name)).isDirectory())
+    .sort((a, b) => b.localeCompare(a)); // Descendente
+
+  if (runs.length === 0) return;
+
+
+  // HTML index
+  const indexHtml = `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -100,24 +84,22 @@ const indexHtml = `<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>📊 Historial de Reportes Allure</h1>
+  <h1>📊 Historial de Reportes: ${testType}</h1>
   <ul>
-    ${dirs
-      .map((dir) => {
-        const fecha = formatRunId(dir);
-        return `
-        <li>
-          <span>
-            📁 <a href="./${dir}/index.html" target="_blank">${dir}</a>
-          </span>
-          <span class="meta">${fecha}</span>
-        </li>`;
-      })
+    ${runs
+      .map(
+        (dir) => `
+    <li>
+      <span>📁 <a href="./${dir}/index.html" target="_blank">${dir}</a></span>
+      <span class="meta">${formatRunId(dir)}</span>
+    </li>`
+      )
       .join("")}
   </ul>
 </body>
 </html>`;
 
-// Guardar index
-fs.writeFileSync(path.join(historyDir, "index.html"), indexHtml);
-console.log(`📄 Índice generado en ${path.join(historyDir, "index.html")}`);
+  // Guardar index
+  fs.writeFileSync(path.join(historyPath, "index.html"), indexContent);
+  console.log(`✅ Generado: ${path.join("gh-pages", testType, "history/index.html")}`);
+});
