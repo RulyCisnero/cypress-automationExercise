@@ -100,6 +100,6 @@ fs.readdirSync(BASE_DIR).forEach((testType) => {
 </html>`;
 
   // Guardar index
-  fs.writeFileSync(path.join(historyPath, "index.html"), indexContent);
+  fs.writeFileSync(path.join(historyPath, "index.html"), indexHtml);
   console.log(`✅ Generado: ${path.join("gh-pages", testType, "history/index.html")}`);
 });
