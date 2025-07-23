@@ -26,6 +26,9 @@ fs.readdirSync(BASE_DIR).forEach((testType) => {
   if (runs.length === 0) return;
 
   // Generar HTML para el historial del tipo de test
+  const latestPath = path.join(historyPath, "latest");
+  const hasLatest = fs.existsSync(latestPath) && fs.statSync(latestPath).isDirectory();
+
   const indexHtml = `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,18 +48,22 @@ fs.readdirSync(BASE_DIR).forEach((testType) => {
 <body>
   <h1>📊 Historial de Reportes: ${testType}</h1>
   <ul>
-    ${runs
-      .map(
-        (dir) => `
+    ${hasLatest ? `
+    <li style="border-left-color: green;">
+      <span>🟢 <a href="./latest/index.html" target="_blank">Último Reporte</a></span>
+      <span class="meta">Alias: latest</span>
+    </li>` : ''}
+    ${runs.map(
+    (dir) => `
     <li>
       <span>📁 <a href="./${dir}/index.html" target="_blank">${dir}</a></span>
       <span class="meta">${formatRunId(dir)}</span>
     </li>`
-      )
-      .join("")}
+  ).join("")}
   </ul>
 </body>
 </html>`;
+
 
   fs.writeFileSync(path.join(historyPath, "index.html"), indexHtml);
   console.log(`✅ Generado: ${path.join("gh-pages", testType, "history/index.html")}`);
