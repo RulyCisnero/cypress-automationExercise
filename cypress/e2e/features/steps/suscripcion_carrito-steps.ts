@@ -18,9 +18,9 @@ When("I click on the cart button", () => {
   navbarPage.clickCartPage();
 });
 
-When("I scroll to the footer", () => {
+/* When("I scroll to the footer", () => {
   footerPage.scrollToFotter();
-});
+}); */
 
 Then("I should see the text 'SUBSCRIPTION' on page", () => {
   footerPage.verifySubscriptionText();
