@@ -25,7 +25,6 @@ describe('Authentication Suite', () => {
         loginPage.verifyAccountCreated();
         loginPage.clickContinueButton();
         cy.verifyLoginAccountVisible();
-        //cy.getUserDetailsByEmail('test@test.com'); //REVISAR NO ANDA.
         loginPage.clickDeleteAccount();
         loginPage.verifyDeleteAccountInfo();
     });
@@ -48,7 +47,7 @@ describe('Authentication Suite', () => {
     it('Logout User', () => {
         navbarPage.clickSignupLoginPage();
         loginPage.verifyLoginAccountVisible();
-        cy.UserLogin(); // logeo con credenciales validas
+        cy.UserLogin();         // logeo con credenciales validas
         loginPage.clickLoginButton();
         cy.verifyLoginAccountVisibleUserExist();
         loginPage.clickLogOutButton();

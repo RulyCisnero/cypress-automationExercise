@@ -18,7 +18,7 @@ describe("Products and Cart Suite", () => {
         cy.clearCookies();
         cy.clearLocalStorage();
         cy.visit('/'); 
-        homePage.verifyBannerPagina(); // Verifica que el banner esté visible y el boddy
+        homePage.verifyBannerPagina(); 
     });
 
     it("Verify All Products and product detail page", () => {
@@ -27,16 +27,16 @@ describe("Products and Cart Suite", () => {
         productPage.verifyAllProductsPageVisible();
         productPage.productListVisible(); 
         productPage.clickfirstProduct(); 
-        productPage.verifyUserIsOnProductDetailPage(); // Verifica que el usuario esté en la página de detalles del producto
-        productPage.verifyProductDetails(); // Verifica que la página de detalles del producto esté visible
+        productPage.verifyUserIsOnProductDetailPage(); 
+        productPage.verifyProductDetails(); 
     });
 
     it("Search Product", () => {
         const searchTerm = 'Polo'; // Término de búsqueda
         navbarPage.clickProductPage(); 
-        productPage.verifyAllProductsPageVisible(); // Verifica que la página de productos esté visible 
-        productPage.productListVisible(); // Verifica que todos los productos estén visibles
-        productPage.searchProduct(searchTerm); // Busca el producto
+        productPage.verifyAllProductsPageVisible();  
+        productPage.productListVisible(); 
+        productPage.searchProduct(searchTerm); 
         productPage.clickSearchButton();
         cy.verifySearchResultsMatchApi(searchTerm);// VALIDACIÓN CON LA API - Integración cruzada
         productPage.verifySearchedProductsTitle();
@@ -82,11 +82,11 @@ describe("Products and Cart Suite", () => {
 
     it('Add to cart from Recommended items', () => {
         productPage.clickProductsButton();
-        productPage.verifyAllProductsPageVisible(); // Verifica que la página de productos esté visible
-        productPage.clickViewProductButton(2);      // Click en el segundo producto
-        cy.fillReviewtForm();                       // Completa el formulario de reseña
-        review.clickSubmitReview();                 // Click en el botón de enviar reseña
-        review.verifyReviewMesaggeAlert();          // Verifica que el mensaje de éxito de reseña esté visible
+        productPage.verifyAllProductsPageVisible(); 
+        productPage.clickViewProductButton(2);      
+        cy.fillReviewtForm();                       
+        review.clickSubmitReview();                 
+        review.verifyReviewMesaggeAlert();          
     });
 
 });
